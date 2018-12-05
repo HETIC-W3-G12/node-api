@@ -1,8 +1,8 @@
 const User = require('../models/user')
 
-const index = () => {
+const index = (req, res) => {
   User.findAll().then(users => {
-    return users
+    res.send(users)
   })
 }
 
