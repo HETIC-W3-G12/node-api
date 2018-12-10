@@ -2,18 +2,22 @@
 
 API REST pour EUKO
 
+## Stack
+
+
 ## Branches
 - Production: `production`
-- Développement/Staging: `master`
+- Développement/Staging: `master` → automatiquement déployé sur l'environnement de staging
 - Issues: une branche par issue, nommée avec le `#numéro` de l'issue.
 
 ## Pour commencer
 
 - Avoir installé Node.js et postgresql `brew install node postgresql`
 - Installer les dépendences `npm i`
-- Créer et remplir le fichier [`.env`](#)
+- Créer et remplir le fichier [`.env`](#variables-denvironnement) à la racine du projet.
+- Créer la DB si pas deja existante `sequelize db:create`
+- Lancer les migrations `sequelize db:migrate`
 - Lancer le serveur en mode dev `npm run dev`
-
 
 ## Code style rules
 
@@ -26,23 +30,24 @@ ESLint configuré avec les règles suivantes :
 
 Convention de nommage :
 - Models : pascal case + singulier - Ex: `User`
-- Controllers : camel case + pluriel + `Controller` - Ex `usersController`
+- Controllers : pascal case + pluriel + `Controller` - Ex `UsersController`
 
 ## Variables d’environnement
 
 À mettre dans un fichier [`.env`](https://github.com/motdotla/dotenv) à la racine du projet.
-- DB_NAME
-- DB_HOST
-- DB_USER
-- DB_PASS
+- DB_NAME (facultatif → default: `'euko-api'`)
+- DB_HOST (facultatif → default: `'localhost'`)
+- DB_USER (généralement le user de la session système : `echo $USER`)
+- DB_PASS (facultatif → default: `''`)
 
 ## Scripts npm
 
-- `start`: Lance le serveur avec la config de production.
+- `start`: Lance les migrations puis le serveur avec la config de production.
 - `dev`: Lance le serveur avec [`nodemon`](https://github.com/remy/nodemon) (Relance automatiquement l’app quand le code a changé)
 - `c` : Lance le projet en mode [`REPL`](https://nodejs.org/api/repl.html) avec les models exportés dans `models/index.js` dans le scope global.
 
 ## Routes
 
-- `/` : Page statique, pour la future landing ?
-- `/users` : Liste de tous les utilisateurs
+- GET `/` : Welcome to EUKO
+- GET `/users` : List users
+- POST `/users` : Create user
