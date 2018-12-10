@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "sequelize db:migrate && node ./bin/www",
     "dev": "nodemon ./bin/www --watch",
     "c": "node ./repl.js"
   },
