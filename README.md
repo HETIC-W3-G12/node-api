@@ -8,7 +8,7 @@ API REST pour EUKO
 ## Branches
 - Production: `production`
 - Développement/Staging: `master` → automatiquement déployé sur l'environnement de staging
-- Issues: une branche par issue, nommée avec le `#numéro` de l'issue.
+- Issues: une branche par issue, nommée avec le `#numéro` de l'issue. → automatiquement déployé à chaque pull request.
 
 ## Pour commencer
 
