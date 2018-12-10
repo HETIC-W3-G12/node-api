@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 // const path = require('path')
-const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
 const logger = require('morgan')
 
 const db = require('./models')
@@ -13,7 +13,8 @@ const app = express()
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(cookieParser())
+app.use(bodyParser.json()) // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 // app.use(express.static(path.join(__dirname, 'public')))
 
 db.sequelize
