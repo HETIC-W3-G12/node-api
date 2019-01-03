@@ -7,7 +7,7 @@ const router = express.Router()
  * @apiGroup Home
  */
 router.get('/', function(req, res, next) {
-  res.json({ message: 'Welcome to EUKO’s API' })
+  res.json({ message: 'Welcome to EUKO’s API. Pour accéder à la documentation : /doc' })
 })
 
 module.exports = router

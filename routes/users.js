@@ -9,13 +9,13 @@ const UsersController = require('../controllers/users-controller')
  * @apiVersion 1.0.0
  * @apiPermission admin
  */
-router.get('/', UsersController.index)
+router.get('/users', UsersController.index)
 
 /**
  * @api {post} /user Create a new user
  * @apiGroup User
  * @apiVersion 1.0.0
  */
-router.post('/', UsersController.create)
+router.post('/user', UsersController.create)
 
 module.exports = router
