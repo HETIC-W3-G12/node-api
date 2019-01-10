@@ -1,6 +1,6 @@
 require('dotenv').config()
 const express = require('express')
-// const path = require('path')
+const passport = require('passport')
 const bodyParser = require('body-parser')
 const logger = require('morgan')
 
@@ -31,5 +31,7 @@ require('./passport')
 app.use('/', express.static('apidoc'))
 app.use('/users', usersRouter)
 app.use('/projects', projectsRouter)
+
+app.use('/secret', passport.authenticate('jwt', {session: false}), (req, res) => res.send('secret route'))
 
 module.exports = app
