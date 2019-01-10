@@ -48,9 +48,10 @@ router.get('/', ProjectsController.index)
  *         }
  * 
  */
+/*
 router.get('/:id', ProjectsController.getOneProject)
 
-/*
+
 
 /project/finance
 id du projet et id de l'utilsateur

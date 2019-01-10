@@ -2,33 +2,29 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Projects', {
-      user_id: {
+      id: {
         allowNull: false,
-        type: Sequelize.STRING
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
       },
       title: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      price: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      time_laps: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       description: {
-        allowNull: false,
         type: Sequelize.STRING
+      },
+      price: {
+        type: Sequelize.INTEGER
       },
       interests: {
-        allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.FLOAT
       },
       state: {
-        allowNull: true,
         type: Sequelize.STRING
+      },
+      time_laps: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
