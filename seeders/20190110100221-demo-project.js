@@ -5,7 +5,7 @@ module.exports = {
     return queryInterface.bulkInsert('Projects', [{
       title: 'Un vélo pour Sam',
       price: 200,
-      time_laps: 3,
+      timeLaps: 3,
       description: 'Résolution 2019 ! Aller à mon travail en vélo, mais j\'ai pas de vélo...',
       interests: 0.05,
       state: 'valid',
@@ -15,10 +15,10 @@ module.exports = {
     {
       title: 'Un mac pour Maeva',
       price: 1000,
-      time_laps: 8,
+      timeLaps: 8,
       description: 'La seule de l\'équipe à pas en avoir, aidons la à basculer du bon côté de la force!',
       interests: 0,
-      state: 'unvalid',
+      state: 'valid',
       createdAt: new Date(),
       updatedAt: new Date()
     }], {});
