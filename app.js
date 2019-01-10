@@ -5,7 +5,6 @@ const bodyParser = require('body-parser')
 const logger = require('morgan')
 
 const db = require('./models')
-const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
 const projectsRouter = require('./routes/projects')
 
