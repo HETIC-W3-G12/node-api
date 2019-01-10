@@ -18,7 +18,7 @@ class ProjectsController extends AppController {
     })
   }
 
-  /* get details of one project */
+  /* get details of one project 
   getOneProject(req, res, id) {
     this.Project.findAll({
       where: {
@@ -28,7 +28,7 @@ class ProjectsController extends AppController {
       res.json(projects)
     })
   }
-
+*/
   create(req, res) {
     this.Project.create(req.body).then(project => {
       res.json(project)
