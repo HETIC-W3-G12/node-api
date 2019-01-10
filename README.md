@@ -51,12 +51,6 @@ Convention de nommage :
 
 ## Documentation de l'API
 
-Avec http://apidocjs.com
+https://euko-api-staging.herokuapp.com
+
 - mettre à jour l'API (fichier HTML) `apidoc -i routes/ -o apidoc/`
-
-
-## Routes
-
-- GET `/` : Welcome to EUKO
-- GET `/users` : List users
-- POST `/users` : Create user

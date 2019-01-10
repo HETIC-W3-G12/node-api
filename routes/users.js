@@ -12,7 +12,7 @@ const UsersController = require('../controllers/users-controller')
 router.get('/users', UsersController.index)
 
 /**
- * @api {post} /user Create a new user
+ * @api {post} /users Create a new user
  * @apiGroup User
  * @apiVersion 1.0.0
  */
