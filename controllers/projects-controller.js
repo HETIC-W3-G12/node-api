@@ -7,8 +7,24 @@ class ProjectsController extends AppController {
     this.create = this.create.bind(this)
   }
 
+  /* list of the project */
   index(req, res) {
-    this.Project.findAll().then(projects => {
+    this.Project.findAll({
+      where: {
+        state: 'valid'
+      }
+   }).then(projects => {
+      res.json(projects)
+    })
+  }
+
+  /* get details of one project */
+  getOneProject(req, res, id) {
+    this.Project.findAll({
+      where: {
+        id: id
+      }
+   }).then(projects => {
       res.json(projects)
     })
   }
