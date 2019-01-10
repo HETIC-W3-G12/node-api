@@ -28,5 +28,6 @@ db.sequelize
 
 app.use('/', indexRouter)
 app.use('/users', usersRouter)
+app.use('/doc', express.static('apidoc'));
 
 module.exports = app

@@ -1,0 +1,8 @@
+{
+    "name": "EUKO API documentation",
+    "version": "1.0.0",
+    "description": "EUKO's API documentation",
+    "template": {
+        "forceLanguage": "en"
+    }
+}

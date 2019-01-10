@@ -13,11 +13,13 @@ API REST pour EUKO
 ## Pour commencer
 
 - Avoir installé Node.js et postgresql `brew install node postgresql`
+- vérifier que postgresql est bien started `brew services list`
+- (si stopped) lancer postgresql `brew services start postgresql`
 - Installer les dépendences `npm i`
 - Créer et remplir le fichier [`.env`](#variables-denvironnement) à la racine du projet.
 - Créer la DB si pas deja existante `sequelize db:create`
 - Lancer les migrations `sequelize db:migrate`
-- Lancer le serveur en mode dev `npm run dev`
+- Lancer le serveur (port 3000) en mode dev `npm run dev`
 
 ## Code style rules
 
@@ -45,6 +47,13 @@ Convention de nommage :
 - `start`: Lance les migrations puis le serveur avec la config de production.
 - `dev`: Lance le serveur avec [`nodemon`](https://github.com/remy/nodemon) (Relance automatiquement l’app quand le code a changé)
 - `c` : Lance le projet en mode [`REPL`](https://nodejs.org/api/repl.html) avec les models exportés dans `models/index.js` dans le scope global.
+
+
+## Documentation de l'API
+
+Avec http://apidocjs.com
+- mettre à jour l'API (fichier HTML) `apidoc -i routes/ -o apidoc/`
+
 
 ## Routes
 
