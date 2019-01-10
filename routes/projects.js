@@ -15,7 +15,7 @@ const ProjectsController = require('../controllers/projects-controller')
  *          "title":"Un vélo pour Sam",
  *          "user_uid":3,
  *          "price":200,
- *          "time_laps":3,
+ *          "timeLaps":3,
  *          "description":"Résolution 2019 ! Aller à mon travail en vélo, mais j'ai pas de vélo...",
  *          "interests":"0%",
  *          "state":"valid",
@@ -28,7 +28,7 @@ router.get('/', ProjectsController.index)
 
 
 /**
- * @api {get} /project/:id Get on project
+ * @api {get} /projects/:id Get on project
  * @apiGroup Project
  * @apiVersion 1.0.0
  * @apiParam {integer} id id of the project
@@ -39,7 +39,7 @@ router.get('/', ProjectsController.index)
  *          "title":"Un vélo pour Sam",
  *          "user_uid":3,
  *          "price":200,
- *          "time_laps":3,
+ *          "timeLaps":3,
  *          "description":"Résolution 2019 ! Aller à mon travail en vélo, mais j'ai pas de vélo...",
  *          "interests":"0%",
  *          "state":"valid",
@@ -48,10 +48,10 @@ router.get('/', ProjectsController.index)
  *         }
  * 
  */
-/*
+
 router.get('/:id', ProjectsController.getOneProject)
 
-
+/*
 
 /project/finance
 id du projet et id de l'utilsateur

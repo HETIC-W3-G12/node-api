@@ -5,6 +5,7 @@ class ProjectsController extends AppController {
     super()
     this.index = this.index.bind(this)
     this.create = this.create.bind(this)
+    this.getOneProject = this.getOneProject.bind(this)
   }
 
   /* list of the project */
@@ -18,17 +19,17 @@ class ProjectsController extends AppController {
     })
   }
 
-  /* get details of one project 
-  getOneProject(req, res, id) {
+  /* get details of one project */
+  getOneProject(req, res) {
     this.Project.findAll({
       where: {
-        id: id
+        id: req.params.id
       }
    }).then(projects => {
       res.json(projects)
     })
   }
-*/
+
   create(req, res) {
     this.Project.create(req.body).then(project => {
       res.json(project)
