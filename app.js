@@ -27,7 +27,6 @@ db.sequelize
     console.error('Unable to connect to the database:', err)
   })
 
-
 app.use('/', express.static('apidoc'))
 app.use('/users', usersRouter)
 app.use('/projects', projectsRouter)
