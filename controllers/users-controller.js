@@ -14,9 +14,13 @@ class UsersController extends AppController {
   }
 
   create(req, res) {
-    this.User.create(req.body).then(user => {
-      res.json(user)
-    })
+    this.User.create(req.body)
+      .then(user => {
+        res.json(user)
+      })
+      .catch(err => {
+        res.json(err)
+      })
   }
 }
 
