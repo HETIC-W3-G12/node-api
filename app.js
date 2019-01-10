@@ -7,6 +7,7 @@ const logger = require('morgan')
 const db = require('./models')
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
+const projectsRouter = require('./routes/projects')
 
 const app = express()
 
@@ -26,8 +27,9 @@ db.sequelize
     console.error('Unable to connect to the database:', err)
   })
 
-app.use('/', indexRouter)
+
+app.use('/', express.static('apidoc'))
 app.use('/users', usersRouter)
-app.use('/doc', express.static('apidoc'));
+app.use('/projects', projectsRouter)
 
 module.exports = app
