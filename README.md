@@ -41,6 +41,7 @@ Convention de nommage :
 - DB_HOST (facultatif → default: `'localhost'`)
 - DB_USER (généralement le user de la session système : `echo $USER`)
 - DB_PASS (facultatif → default: `''`)
+- JWT_SECRET (une chaine de caractère pour générer les JWT)
 
 ## Scripts npm
 

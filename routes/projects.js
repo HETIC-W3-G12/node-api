@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const passport = require('passport')
 
 const ProjectsController = require('../controllers/projects-controller')
 
@@ -24,7 +25,7 @@ const ProjectsController = require('../controllers/projects-controller')
  *          "state":"valid",
  *          "createdAt":"2019-01-03T11:36:58.540Z"
  *         }]
- * 
+ *
  */
 router.get('/', ProjectsController.index)
 
@@ -51,7 +52,7 @@ router.get('/', ProjectsController.index)
  *          "state":"valid",
  *          "createdAt":"2019-01-03T11:36:58.540Z"
  *         }
- * 
+ *
  */
 
 router.get('/:id', ProjectsController.getOneProject)
@@ -103,6 +104,6 @@ router.get('/funded', ProjectsController.projectFounded)
  *          "createdAt":"2019-01-03T11:36:58.540Z"
  *         }
  */
-router.post('/', ProjectsController.create)
+router.post('/', passport.authenticate('jwt', {session: false}), ProjectsController.create)
 
 module.exports = router
