@@ -6,9 +6,12 @@ const ProjectsController = require('../controllers/projects-controller')
 
 
 /**
- * @api {get} /projects Get all the projects
- * @apiGroup Project
+ * @api {get} /projects  Get all the valid projects
  * @apiVersion 1.0.0
+ * @apiName Projects
+ * @apiDescription Get all the valid projects
+ * @apiGroup Project
+ * 
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *     [{
@@ -16,12 +19,11 @@ const ProjectsController = require('../controllers/projects-controller')
  *          "title":"Un vélo pour Sam",
  *          "user_uid":3,
  *          "price":200,
- *          "time_laps":3,
+ *          "timeLaps":3,
  *          "description":"Résolution 2019 ! Aller à mon travail en vélo, mais j'ai pas de vélo...",
  *          "interests":"0%",
  *          "state":"valid",
- *          "createdAt":"2019-01-03T11:36:58.540Z",
- *          "updatedAt":"2019-01-03T11:36:58.540Z"
+ *          "createdAt":"2019-01-03T11:36:58.540Z"
  *         }]
  *
  */
@@ -29,10 +31,14 @@ router.get('/', ProjectsController.index)
 
 
 /**
- * @api {get} /project/:id Get on project
- * @apiGroup Project
+ * @api {get} /projects/:id Get details on a project
  * @apiVersion 1.0.0
+ * @apiName Project
+ * @apiDescription Get details on a project
+ * @apiGroup Project
+ * 
  * @apiParam {integer} id id of the project
+ * 
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *     {
@@ -40,37 +46,63 @@ router.get('/', ProjectsController.index)
  *          "title":"Un vélo pour Sam",
  *          "user_uid":3,
  *          "price":200,
- *          "time_laps":3,
+ *          "timeLaps":3,
  *          "description":"Résolution 2019 ! Aller à mon travail en vélo, mais j'ai pas de vélo...",
  *          "interests":"0%",
  *          "state":"valid",
- *          "createdAt":"2019-01-03T11:36:58.540Z",
- *          "updatedAt":"2019-01-03T11:36:58.540Z"
+ *          "createdAt":"2019-01-03T11:36:58.540Z"
  *         }
  *
  */
-/*
+
 router.get('/:id', ProjectsController.getOneProject)
 
+/**
+ * Get the project of a user
+ */
+router.get('/user/:id', ProjectsController.getProjectByUser)
 
+/**
+ * @api {post} /projects/funded Project has been founded
+ * @apiVersion 1.0.0
+ * @apiName FoundedProject
+ * @apiDescription Link a project to an investor and update the status
+ * @apiGroup Project
+ * 
+ * 
+ * @apiParam {Integer} projectId     Mandatory Id of the project.
+ * @apiParam {Integer} investorId     Mandatory Id of the investor.
+ */
+router.get('/funded', ProjectsController.projectFounded)
 
-/project/finance
-id du projet et id de l'utilsateur
->> le passer en financé
-
-/project/create
-post
->> valid de Base
-
-
-/project d'un user
->> depuis un id
-*/
 
 /**
  * @api {post} /project Create a new project
- * @apiGroup Project
  * @apiVersion 1.0.0
+ * @apiName CreateProject
+ * @apiDescription Create a new project
+ * @apiGroup Project
+ * 
+ * @apiParam {String} title     Mandatory Project's title.
+ * @apiParam {String} description     Mandatory Project's description.
+ * @apiParam {Integer} price     Mandatory Amount wanted by the borrower.
+ * @apiParam {Integer} interests     Mandatory The interests decided for the refund.
+ * @apiParam {String="valid","unvalid"} state     Mandatory Project's description.
+ * @apiParam {Integer} timeLaps     Mandatory Number of month choose for the refund process duration.
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *          "id":1,
+ *          "title":"Un vélo pour Sam",
+ *          "user_uid":3,
+ *          "price":200,
+ *          "timeLaps":3,
+ *          "description":"Résolution 2019 ! Aller à mon travail en vélo, mais j'ai pas de vélo...",
+ *          "interests":"0%",
+ *          "state":"valid",
+ *          "createdAt":"2019-01-03T11:36:58.540Z"
+ *         }
  */
 router.post('/', passport.authenticate('jwt', {session: false}), ProjectsController.create)
 
