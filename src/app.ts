@@ -1,5 +1,5 @@
 require('dotenv').config()
-const express = require('express')
+import * as express from 'express'
 const passport = require('passport')
 const bodyParser = require('body-parser')
 const logger = require('morgan')

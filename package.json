@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "start": "sequelize db:migrate && node ./bin/www",
-    "dev": "nodemon ./bin/www --watch",
+    "dev": "nodemon --watch",
     "c": "node ./repl.js",
     "doc": "apidoc -i routes/ -o apidoc/"
   },
@@ -20,7 +20,9 @@
     "pg": "^7.7.1",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.42.0",
-    "sequelize-cli": "^5.4.0"
+    "sequelize-cli": "^5.4.0",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2"
   },
   "devDependencies": {
     "eslint": "^5.11.1",
