@@ -76,7 +76,7 @@ router.get('/funded', ProjectsController.projectFounded)
 
 
 /**
- * @api {post} /project Create a new project
+ * @api {post} /projects Create a new project
  * @apiVersion 1.0.0
  * @apiName CreateProject
  * @apiDescription Create a new project
@@ -85,7 +85,7 @@ router.get('/funded', ProjectsController.projectFounded)
  * @apiParam {String} title     Mandatory Project's title.
  * @apiParam {String} description     Mandatory Project's description.
  * @apiParam {Integer} price     Mandatory Amount wanted by the borrower.
- * @apiParam {Integer} interests     Mandatory The interests decided for the refund.
+ * @apiParam {Float} interests     Mandatory The interests decided for the refund.
  * @apiParam {String="valid","unvalid"} state     Mandatory Project's description.
  * @apiParam {Integer} timeLaps     Mandatory Number of month choose for the refund process duration.
  * 
