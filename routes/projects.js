@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const passport = require('passport')
 
 const ProjectsController = require('../controllers/projects-controller')
 
@@ -22,7 +23,7 @@ const ProjectsController = require('../controllers/projects-controller')
  *          "createdAt":"2019-01-03T11:36:58.540Z",
  *          "updatedAt":"2019-01-03T11:36:58.540Z"
  *         }]
- * 
+ *
  */
 router.get('/', ProjectsController.index)
 
@@ -46,7 +47,7 @@ router.get('/', ProjectsController.index)
  *          "createdAt":"2019-01-03T11:36:58.540Z",
  *          "updatedAt":"2019-01-03T11:36:58.540Z"
  *         }
- * 
+ *
  */
 /*
 router.get('/:id', ProjectsController.getOneProject)
@@ -71,6 +72,6 @@ post
  * @apiGroup Project
  * @apiVersion 1.0.0
  */
-router.post('/', ProjectsController.create)
+router.post('/', passport.authenticate('jwt', {session: false}), ProjectsController.create)
 
 module.exports = router

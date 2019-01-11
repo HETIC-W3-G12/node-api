@@ -5,7 +5,7 @@ const UsersController = require('../controllers/users-controller')
 
 /**
  * @api {get} /users Get all the user
- * @apiGroup User
+ * @apiGroup Users
  * @apiVersion 1.0.0
  * @apiPermission admin
  */
@@ -13,8 +13,10 @@ router.get('/', UsersController.index)
 
 /**
  * @api {post} /users/sign_up Create a new user
- * @apiGroup User
+ * @apiGroup Users
  * @apiVersion 1.0.0
+ * @apiParam {String} email user unique email.
+ * @apiParam {String} password user password.
  */
 router.post('/sign_up', UsersController.create)
 
@@ -22,7 +24,13 @@ router.post('/sign_up', UsersController.create)
 
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
-/* POST login. */
+/**
+ * @api {post} /users/sign_in Login
+ * @apiGroup Users
+ * @apiVersion 1.0.0
+ * @apiParam {String} email user unique email.
+ * @apiParam {String} password user password.
+ */
 router.post('/sign_in', function(req, res, next) {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err || !user) {
