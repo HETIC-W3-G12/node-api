@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const UsersController = require('../controllers/users-controller')
+import UsersController from '../controllers/users-controller'
 
 /**
  * @api {get} /users Get all the user
@@ -9,7 +9,7 @@ const UsersController = require('../controllers/users-controller')
  * @apiVersion 1.0.0
  * @apiPermission admin
  */
-router.get('/', UsersController.index)
+router.get('/', new UsersController().index)
 
 /**
  * @api {post} /users/sign_up Create a new user
@@ -18,7 +18,7 @@ router.get('/', UsersController.index)
  * @apiParam {String} email user unique email.
  * @apiParam {String} password user password.
  */
-router.post('/sign_up', UsersController.create)
+router.post('/sign_up', new UsersController().create)
 
 // LOGIN
 
@@ -50,4 +50,4 @@ router.post('/sign_in', function(req, res, next) {
   })(req, res)
 })
 
-module.exports = router
+export default router

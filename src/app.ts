@@ -7,8 +7,8 @@ const logger = require('morgan')
 import { createConnection } from 'typeorm'
 
 // const db = require('./models')
-const usersRouter = require('./routes/users')
-const projectsRouter = require('./routes/projects')
+import usersRouter from './routes/users'
+// const projectsRouter = require('./routes/projects')
 
 const app = express()
 
@@ -20,12 +20,12 @@ app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-
 
 // createConnection method will automatically read connection options
 // from your ormconfig file or environment variables
-createConnection().then(async connection => {
+createConnection().then(connection => {
   require('./passport')
 
   app.use('/', express.static('apidoc'))
   app.use('/users', usersRouter)
-  app.use('/projects', projectsRouter)
+  // app.use('/projects', projectsRouter)
 
   app.use('/secret', passport.authenticate('jwt', {session: false}), (req, res) => res.send('secret route'))
 })
