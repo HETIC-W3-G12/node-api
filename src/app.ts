@@ -1,10 +1,12 @@
 require('dotenv').config()
+import 'reflect-metadata'
 import * as express from 'express'
 const passport = require('passport')
 const bodyParser = require('body-parser')
 const logger = require('morgan')
+import { createConnection } from 'typeorm'
 
-const db = require('./models')
+// const db = require('./models')
 const usersRouter = require('./routes/users')
 const projectsRouter = require('./routes/projects')
 
@@ -15,23 +17,17 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-// app.use(express.static(path.join(__dirname, 'public')))
 
-db.sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.')
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err)
-  })
+// createConnection method will automatically read connection options
+// from your ormconfig file or environment variables
+createConnection().then(async connection => {
+  require('./passport')
 
-require('./passport')
+  app.use('/', express.static('apidoc'))
+  app.use('/users', usersRouter)
+  app.use('/projects', projectsRouter)
 
-app.use('/', express.static('apidoc'))
-app.use('/users', usersRouter)
-app.use('/projects', projectsRouter)
-
-app.use('/secret', passport.authenticate('jwt', {session: false}), (req, res) => res.send('secret route'))
+  app.use('/secret', passport.authenticate('jwt', {session: false}), (req, res) => res.send('secret route'))
+})
 
 module.exports = app

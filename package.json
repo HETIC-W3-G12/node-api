@@ -1,12 +1,13 @@
 {
   "private": true,
   "scripts": {
-    "start": "sequelize db:migrate && node ./bin/www",
+    "start": "ts-node -T ./bin/www",
     "dev": "nodemon --watch",
     "c": "node ./repl.js",
     "doc": "apidoc -i routes/ -o apidoc/"
   },
   "dependencies": {
+    "@types/node": "^10.12.18",
     "apidoc": "^0.17.7",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
@@ -19,9 +20,11 @@
     "passport-local": "^1.0.0",
     "pg": "^7.7.1",
     "pg-hstore": "^2.3.2",
+    "reflect-metadata": "^0.1.12",
     "sequelize": "^4.42.0",
     "sequelize-cli": "^5.4.0",
     "ts-node": "^7.0.1",
+    "typeorm": "^0.2.11",
     "typescript": "^3.2.2"
   },
   "devDependencies": {

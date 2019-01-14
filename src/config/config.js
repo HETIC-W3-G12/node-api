@@ -1,5 +1,7 @@
 require('dotenv').config()
 
+let dbObj = null
+
 module.exports = {
   development: {
     username: process.env.DB_USER,
