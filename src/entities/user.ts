@@ -14,4 +14,10 @@ export default class User extends BaseEntity {
   @Column()
   @Length(6, 20)
   password: string
+
+  @Column({
+    default: false
+  })
+  admin: boolean
+
 }

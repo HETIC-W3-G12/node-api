@@ -13,7 +13,7 @@ passport.use(
       usernameField: 'email',
       passwordField: 'password'
     },
-    function(email, password, cb) {
+    (email, password, cb) => {
       //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
       return User.findOne({
         select: ['id', 'email', 'password'],
@@ -27,7 +27,7 @@ passport.use(
           }
           bcrypt.compare(password, user.password).then(function(res) {
             if (res) {
-              return cb(null, {email: user.email}, {
+              return cb(null, {email: user.email, id: user.id}, {
                 message: 'Logged In Successfully'
               })
             } else return cb(null, false, {
@@ -49,16 +49,17 @@ passport.use(
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
       secretOrKey: process.env.JWT_SECRET
     },
-    function(jwtPayload, cb) {
+    async (jwtPayload, cb) => {
       //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
-      return User.findOne({ where: { id: jwtPayload.id } })
-        .then(user => {
-          console.log(user)
-          return cb(null, Object.assign({}, user))
+      console.log(jwtPayload)
+      const user = await User.findOne({ where: { id: jwtPayload.id } })
+
+      if (!user) {
+        return cb(null, false, {
+          message: 'Incorrect user'
         })
-        .catch(err => {
-          return cb(err)
-        })
+      }
+      return cb(null, {email: user.email, admin: user.admin})
     }
   )
 )

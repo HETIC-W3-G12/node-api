@@ -27,7 +27,7 @@ createConnection().then(connection => {
   app.use('/users', usersRouter)
   // app.use('/projects', projectsRouter)
 
-  app.use('/secret', passport.authenticate('jwt', {session: false}), (req, res) => res.send('secret route'))
+  app.use('/secret', passport.authenticate('jwt', {session: false}), (req, res) => res.send(req.user))
 })
 
 module.exports = app
