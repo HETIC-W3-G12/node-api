@@ -12,7 +12,7 @@ export default class User extends BaseEntity {
   email: string
 
   @Column()
-  @Length(6, 20)
+  @Length(6, 72)
   password: string
 
   @Column({
