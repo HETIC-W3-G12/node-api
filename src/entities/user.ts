@@ -1,4 +1,4 @@
-import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, Unique} from 'typeorm'
+import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, Unique, CreateDateColumn} from 'typeorm'
 import {IsEmail, Length} from 'class-validator'
 
 @Entity()
@@ -20,4 +20,6 @@ export default class User extends BaseEntity {
   })
   admin: boolean
 
+  @CreateDateColumn()
+  createdDate: Date
 }
