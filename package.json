@@ -3,7 +3,7 @@
   "scripts": {
     "start": "ts-node -T ./bin/www",
     "dev": "nodemon --watch",
-    "c": "node ./repl.js",
+    "c": "ts-node ./repl.ts",
     "doc": "apidoc -i routes/ -o apidoc/",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js"
   },
