@@ -4,11 +4,14 @@
     "start": "ts-node -T ./bin/www",
     "dev": "nodemon --watch",
     "c": "node ./repl.js",
-    "doc": "apidoc -i routes/ -o apidoc/"
+    "doc": "apidoc -i routes/ -o apidoc/",
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
     "@types/node": "^10.12.18",
     "apidoc": "^0.17.7",
+    "bcrypt": "^3.0.3",
+    "class-validator": "^0.9.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "dotenv": "^6.2.0",
