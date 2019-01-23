@@ -2,9 +2,6 @@
 
 API REST pour EUKO
 
-## Stack
-
-
 ## Branches
 - Production: `production`
 - Développement/Staging: `master` → automatiquement déployé sur l'environnement de staging
@@ -17,8 +14,7 @@ API REST pour EUKO
 - (si stopped) lancer postgresql `brew services start postgresql`
 - Installer les dépendences `npm i`
 - Créer et remplir le fichier [`.env`](#variables-denvironnement) à la racine du projet.
-- Créer la DB si pas deja existante `sequelize db:create`
-- Lancer les migrations `sequelize db:migrate`
+- Créer la DB si pas deja existante [`https://www.postgresql.org/docs/9.1/app-createdb.html`]()
 - Lancer le serveur (port 3000) en mode dev `npm run dev`
 
 ## Code style rules
