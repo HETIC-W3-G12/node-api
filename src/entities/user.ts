@@ -1,5 +1,7 @@
-import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, Unique, CreateDateColumn} from 'typeorm'
+import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, Unique, CreateDateColumn, OneToMany} from 'typeorm'
 import {IsEmail, Length} from 'class-validator'
+
+import Project from './project'
 
 @Entity()
 @Unique(['email'])
@@ -11,7 +13,7 @@ export default class User extends BaseEntity {
   @IsEmail()
   email: string
 
-  @Column()
+  @Column({ select: false })
   @Length(6, 72)
   password: string
 
@@ -22,4 +24,7 @@ export default class User extends BaseEntity {
 
   @CreateDateColumn()
   createdDate: Date
+
+  @OneToMany(type => Project, project => project.user)
+  projects: Project[]
 }

@@ -62,7 +62,7 @@ passport.use(
           message: 'Incorrect user'
         })
       }
-      return cb(null, {email: user.email, admin: user.admin})
+      return cb(null, {id: user.id, email: user.email, admin: user.admin})
     }
   )
 )

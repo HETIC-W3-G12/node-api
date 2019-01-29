@@ -1,14 +1,15 @@
 import User from '../entities/user'
-import {validate} from 'class-validator'
+import { validate } from 'class-validator'
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import * as passport from 'passport'
 
 export default class {
-  index(req, res) {
-    User.find().then(users => {
-      res.json(users)
+  async index(req, res) {
+    const users = await User.find({
+      relations: ['projects']
     })
+    res.json(users)
   }
 
   async create(req, res) {
@@ -24,7 +25,7 @@ export default class {
       user.save().then(user => {
         res.json(user)
       }).catch(err => {
-        res.json(err)
+        res.status(500).json(err)
       })
     }
   }

@@ -1,4 +1,6 @@
 import Project, { State as StateEnum } from '../entities/project'
+import { pick, forEach } from 'lodash'
+import { validate } from 'class-validator'
 
 export default class {
   /* list of the project */
@@ -6,7 +8,10 @@ export default class {
     const projects = await Project.find({
       where: {
         state: StateEnum.valid
-      }
+      },
+      relations: ['user']
+    }).catch(err => {
+      res.status(500).json(err)
     })
     res.json(projects)
   }
@@ -25,14 +30,28 @@ export default class {
   }
 
   /* create a new project */
-  create(req, res) {
-    Project.insert(req.body)
-      .then(project => {
+  async create(req, res) {
+    const params = pick(req.body, [
+      'title', 'description', 'price', 'interests', 'timeLaps'
+    ])
+    const project = new Project()
+    forEach(params, (value, key) => {
+      console.log(value, key)
+      project[key] = value
+    })
+    project.user = req.user
+    project.state = StateEnum.valid
+
+    const errors = await validate(project)
+    if (errors.length > 0) {
+      res.status(400).json(errors)
+    } else {
+      project.save().then(project => {
         res.json(project)
+      }).catch(err => {
+        res.status(500).json(err)
       })
-      .catch(function(err) {
-        res.json(err)
-      })
+    }
   }
 
   /* update state of the project to running (has been founded) */
