@@ -4,6 +4,9 @@
   "scripts": {
   },
   "env": {
+    "JWT_SECRET": {
+      "required": true
+    }
   },
   "formation": {
     "web": {

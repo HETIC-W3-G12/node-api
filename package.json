@@ -1,13 +1,17 @@
 {
   "private": true,
   "scripts": {
-    "start": "sequelize db:migrate && node ./bin/www",
-    "dev": "nodemon ./bin/www --watch",
-    "c": "node ./repl.js",
-    "doc": "apidoc -i routes/ -o apidoc/"
+    "start": "ts-node -T ./bin/www",
+    "dev": "nodemon --watch",
+    "c": "ts-node ./repl.ts",
+    "doc": "apidoc -i routes/ -o apidoc/",
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
+    "@types/node": "^10.12.18",
     "apidoc": "^0.17.7",
+    "bcrypt": "^3.0.3",
+    "class-validator": "^0.9.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "dotenv": "^6.2.0",
@@ -19,11 +23,14 @@
     "passport-local": "^1.0.0",
     "pg": "^7.7.1",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.42.0",
-    "sequelize-cli": "^5.4.0"
+    "reflect-metadata": "^0.1.12",
+    "ts-node": "^7.0.1",
+    "typeorm": "^0.2.11",
+    "typescript": "^3.2.2"
   },
   "devDependencies": {
     "eslint": "^5.11.1",
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.9",
+    "typescript-eslint-parser": "^21.0.2"
   }
 }

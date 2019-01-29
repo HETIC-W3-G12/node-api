@@ -2,8 +2,7 @@ const express = require('express')
 const router = express.Router()
 const passport = require('passport')
 
-const ProjectsController = require('../controllers/projects-controller')
-
+import ProjectsController from '../controllers/projects-controller'
 
 /**
  * @api {get} /projects  Get all the valid projects
@@ -11,7 +10,7 @@ const ProjectsController = require('../controllers/projects-controller')
  * @apiName Projects
  * @apiDescription Get all the valid projects
  * @apiGroup Project
- * 
+ *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *     [{
@@ -27,7 +26,7 @@ const ProjectsController = require('../controllers/projects-controller')
  *         }]
  *
  */
-router.get('/', ProjectsController.index)
+router.get('/', new ProjectsController().index)
 
 
 /**
@@ -36,9 +35,9 @@ router.get('/', ProjectsController.index)
  * @apiName Project
  * @apiDescription Get details on a project
  * @apiGroup Project
- * 
+ *
  * @apiParam {integer} id id of the project
- * 
+ *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *     {
@@ -55,12 +54,12 @@ router.get('/', ProjectsController.index)
  *
  */
 
-router.get('/:id', ProjectsController.getOneProject)
+router.get('/:id', new ProjectsController().getOneProject)
 
 /**
  * Get the project of a user
  */
-router.get('/user/:id', ProjectsController.getProjectByUser)
+router.get('/user/:id', new ProjectsController().getProjectByUser)
 
 /**
  * @api {post} /projects/funded Project has been founded
@@ -68,12 +67,12 @@ router.get('/user/:id', ProjectsController.getProjectByUser)
  * @apiName FoundedProject
  * @apiDescription Link a project to an investor and update the status
  * @apiGroup Project
- * 
- * 
+ *
+ *
  * @apiParam {Integer} projectId     Mandatory Id of the project.
  * @apiParam {Integer} investorId     Mandatory Id of the investor.
  */
-router.get('/funded', ProjectsController.projectFounded)
+router.get('/funded', new ProjectsController().projectFounded)
 
 
 /**
@@ -82,14 +81,14 @@ router.get('/funded', ProjectsController.projectFounded)
  * @apiName CreateProject
  * @apiDescription Create a new project
  * @apiGroup Project
- * 
+ *
  * @apiParam {String} title     Mandatory Project's title.
  * @apiParam {String} description     Mandatory Project's description.
  * @apiParam {Integer} price     Mandatory Amount wanted by the borrower.
  * @apiParam {Float} interests     Mandatory The interests decided for the refund.
  * @apiParam {String="valid","unvalid"} state     Mandatory Project's description.
  * @apiParam {Integer} timeLaps     Mandatory Number of month choose for the refund process duration.
- * 
+ *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *     {
@@ -104,6 +103,6 @@ router.get('/funded', ProjectsController.projectFounded)
  *          "createdAt":"2019-01-03T11:36:58.540Z"
  *         }
  */
-router.post('/', passport.authenticate('jwt', {session: false}), ProjectsController.create)
+router.post('/', passport.authenticate('jwt', {session: false}), new ProjectsController().create)
 
-module.exports = router
+export default router
