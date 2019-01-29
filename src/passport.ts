@@ -52,7 +52,10 @@ passport.use(
     async (jwtPayload, cb) => {
       //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
       console.log(jwtPayload)
-      const user = await User.findOne({ where: { id: jwtPayload.id } })
+      const user = await User.findOne({ where: { id: jwtPayload.id } }).catch(err => {
+        console.log(err)
+        return cb(err)
+      })
 
       if (!user) {
         return cb(null, false, {
@@ -63,3 +66,5 @@ passport.use(
     }
   )
 )
+
+export const privateRoute = passport.authenticate('jwt', {session: false})
