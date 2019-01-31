@@ -1,4 +1,5 @@
 import User from '../entities/user'
+import Project from '../entities/project'
 import { validate } from 'class-validator'
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
@@ -47,5 +48,14 @@ export default class {
         return res.json({ info, user, token })
       })
     })(req, res)
+  }
+
+  async projects(req, res) {
+    const projects = await Project.find({
+      where: { user: req.user }
+    }).catch(err => {
+      res.status(500).json(err)
+    })
+    res.json(projects)
   }
 }

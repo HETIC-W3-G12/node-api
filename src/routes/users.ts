@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+import { privateRoute } from '../passport'
 
 import UsersController from '../controllers/users-controller'
 
@@ -28,5 +29,12 @@ router.post('/sign_up', new UsersController().create)
  * @apiParam {String} password user password.
  */
 router.post('/sign_in', new UsersController().signIn)
+
+/**
+ * @api {GET} /users/projects User projects
+ * @apiGroup Users
+ * @apiVersion 1.0.0
+ */
+router.get('/projects', privateRoute, new UsersController().projects)
 
 export default router
