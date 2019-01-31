@@ -4,7 +4,7 @@
     "start": "ts-node ./node_modules/typeorm/cli.js migration:run && ts-node -T ./bin/www",
     "dev": "nodemon --watch",
     "c": "ts-node ./repl.ts",
-    "doc": "apidoc -i routes/ -o apidoc/",
+    "doc": "apidoc -i src/routes/ -o apidoc/",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js"
   },
   "dependencies": {

@@ -32,7 +32,6 @@ export default class {
     ])
     const project = new Project()
     forEach(params, (value, key) => {
-      console.log(value, key)
       project[key] = value
     })
     project.user = req.user

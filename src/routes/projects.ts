@@ -86,7 +86,6 @@ router.get('/funded', new ProjectsController().projectFounded)
  * @apiParam {String} description     Mandatory Project's description.
  * @apiParam {Integer} price     Mandatory Amount wanted by the borrower.
  * @apiParam {Float} interests     Mandatory The interests decided for the refund.
- * @apiParam {String="valid","unvalid"} state     Mandatory Project's description.
  * @apiParam {Integer} timeLaps     Mandatory Number of month choose for the refund process duration.
  *
  * @apiSuccessExample {json} Success-Response:
