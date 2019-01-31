@@ -5,14 +5,10 @@ import { validate } from 'class-validator'
 export default class {
   /* list of the project */
   async index(req, res) {
-    const projects = await Project.find({
-      where: {
-        state: StateEnum.valid
-      },
-      relations: ['user']
-    }).catch(err => {
-      res.status(500).json(err)
-    })
+    const projects = await Project.createQueryBuilder('project')
+      .innerJoinAndSelect('project.user', 'user')
+      .select(['project.id', 'project.title', 'project.description', 'project.price', 'project.interests', 'project.state', 'project.timeLaps', 'project.createdDate', 'user.id'])
+      .getMany()
     res.json(projects)
   }
 

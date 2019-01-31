@@ -6,9 +6,10 @@ import * as passport from 'passport'
 
 export default class {
   async index(req, res) {
-    const users = await User.find({
-      relations: ['projects']
-    })
+    const users = await User.createQueryBuilder('user')
+      .innerJoinAndSelect('user.projects', 'project')
+      .select(['user.id', 'project.id'])
+      .getMany()
     res.json(users)
   }
 
