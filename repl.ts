@@ -16,7 +16,8 @@ require('fs')
 // a global variable in the
 // REPL
 repl.context.models = models
-createConnection().then(() => {
+createConnection().then(connection => {
+  repl.context.connection = connection
   let modelsNames = ''
   // Make each model a global
   // object in the REPL
