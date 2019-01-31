@@ -20,7 +20,7 @@ export default class Project extends BaseEntity {
   @Column({nullable: false})
   price: number
 
-  @Column({nullable: false})
+  @Column({nullable: false, type: 'float'})
   interests: number
 
   @Column({nullable: false})
