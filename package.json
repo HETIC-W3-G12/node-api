@@ -1,10 +1,10 @@
 {
   "private": true,
   "scripts": {
-    "start": "ts-node -T ./bin/www",
+    "start": "ts-node ./node_modules/typeorm/cli.js migration:run && ts-node -T ./bin/www",
     "dev": "nodemon --watch",
     "c": "ts-node ./repl.ts",
-    "doc": "apidoc -i routes/ -o apidoc/",
+    "doc": "apidoc -i src/routes/ -o apidoc/",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "dotenv": "^6.2.0",
     "express": "~4.16.0",
     "jsonwebtoken": "^8.4.0",
+    "lodash": "^4.17.11",
     "morgan": "~1.9.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",

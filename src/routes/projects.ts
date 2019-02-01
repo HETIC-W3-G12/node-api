@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const passport = require('passport')
+import { privateRoute } from '../passport'
 
 import ProjectsController from '../controllers/projects-controller'
 
@@ -86,7 +86,6 @@ router.get('/funded', new ProjectsController().projectFounded)
  * @apiParam {String} description     Mandatory Project's description.
  * @apiParam {Integer} price     Mandatory Amount wanted by the borrower.
  * @apiParam {Float} interests     Mandatory The interests decided for the refund.
- * @apiParam {String="valid","unvalid"} state     Mandatory Project's description.
  * @apiParam {Integer} timeLaps     Mandatory Number of month choose for the refund process duration.
  *
  * @apiSuccessExample {json} Success-Response:
@@ -103,6 +102,6 @@ router.get('/funded', new ProjectsController().projectFounded)
  *          "createdAt":"2019-01-03T11:36:58.540Z"
  *         }
  */
-router.post('/', passport.authenticate('jwt', {session: false}), new ProjectsController().create)
+router.post('/', privateRoute, new ProjectsController().create)
 
 export default router

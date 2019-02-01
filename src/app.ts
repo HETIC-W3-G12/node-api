@@ -1,7 +1,7 @@
 require('dotenv').config()
 import 'reflect-metadata'
 import * as express from 'express'
-const passport = require('passport')
+import { privateRoute } from './passport'
 const bodyParser = require('body-parser')
 const logger = require('morgan')
 import { createConnection } from 'typeorm'
@@ -27,7 +27,7 @@ createConnection().then(connection => {
   app.use('/users', usersRouter)
   app.use('/projects', projectsRouter)
 
-  app.use('/secret', passport.authenticate('jwt', {session: false}), (req, res) => res.send(req.user))
+  app.use('/secret', privateRoute, (req, res) => res.send(req.user))
 })
 
 module.exports = app

@@ -1,4 +1,6 @@
-import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn} from 'typeorm'
+import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne} from 'typeorm'
+
+import User from './user'
 
 export enum State {
   unvalid, valid, running, complete, canceled
@@ -18,7 +20,7 @@ export default class Project extends BaseEntity {
   @Column({nullable: false})
   price: number
 
-  @Column({nullable: false})
+  @Column({nullable: false, type: 'float'})
   interests: number
 
   @Column({nullable: false})
@@ -29,4 +31,7 @@ export default class Project extends BaseEntity {
 
   @CreateDateColumn()
   createdDate: Date
+
+  @ManyToOne(type => User, user => user.projects)
+  user: User
 }

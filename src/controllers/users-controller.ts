@@ -1,14 +1,17 @@
 import User from '../entities/user'
-import {validate} from 'class-validator'
+import Project from '../entities/project'
+import { validate } from 'class-validator'
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import * as passport from 'passport'
 
 export default class {
-  index(req, res) {
-    User.find().then(users => {
-      res.json(users)
-    })
+  async index(req, res) {
+    const users = await User.createQueryBuilder('user')
+      .innerJoinAndSelect('user.projects', 'project')
+      .select(['user.id', 'project.id'])
+      .getMany()
+    res.json(users)
   }
 
   async create(req, res) {
@@ -24,7 +27,7 @@ export default class {
       user.save().then(user => {
         res.json(user)
       }).catch(err => {
-        res.json(err)
+        res.status(500).json(err)
       })
     }
   }
@@ -45,5 +48,14 @@ export default class {
         return res.json({ info, user, token })
       })
     })(req, res)
+  }
+
+  async projects(req, res) {
+    const projects = await Project.find({
+      where: { user: req.user }
+    }).catch(err => {
+      res.status(500).json(err)
+    })
+    res.json(projects)
   }
 }
