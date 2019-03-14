@@ -3,7 +3,11 @@ import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, Ma
 import User from './user'
 
 export enum State {
-  unvalid, valid, running, complete, canceled
+  UNVALID = "unvalid", 
+  VALID = "valid", 
+  RUNNING = "running", 
+  COMPLETE = "complete", 
+  CANCELED = "canceled"
 }
 
 @Entity()
@@ -20,10 +24,17 @@ export default class Project extends BaseEntity {
   @Column({nullable: false})
   price: number
 
-  @Column({nullable: false, type: 'float'})
+  @Column({
+    default: 0.01, 
+    type: 'float'
+  })
   interests: number
 
-  @Column({nullable: false})
+  @Column({
+    type: "enum",
+    enum: State,
+    default: State.UNVALID
+  })
   state: State
 
   @Column({nullable: false})

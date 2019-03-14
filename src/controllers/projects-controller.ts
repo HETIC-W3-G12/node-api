@@ -6,8 +6,7 @@ export default class {
   /* list of the project */
   async index(req, res) {
     const projects = await Project.createQueryBuilder('project')
-      .innerJoinAndSelect('project.user', 'user')
-      .select(['project.id', 'project.title', 'project.description', 'project.price', 'project.interests', 'project.state', 'project.timeLaps', 'project.createdDate', 'user.id'])
+      .leftJoinAndSelect('project.user', 'user')
       .getMany()
     res.json(projects)
   }
@@ -27,22 +26,28 @@ export default class {
 
   /* create a new project */
   async create(req, res) {
+
     const params = pick(req.body, [
-      'title', 'description', 'price', 'interests', 'timeLaps'
+      'title', 'description', 'price', 'timeLaps'
     ])
+
     const project = new Project()
+  
     forEach(params, (value, key) => {
       project[key] = value
     })
+
     project.user = req.user
-    project.state = StateEnum.valid
+
+    // force state and interests
+    project.state = StateEnum.VALID
 
     const errors = await validate(project)
     if (errors.length > 0) {
       res.status(400).json(errors)
     } else {
       project.save().then(project => {
-        res.json(project)
+        res.status(200).json(project)
       }).catch(err => {
         res.status(500).json(err)
       })
