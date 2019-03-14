@@ -2,6 +2,7 @@ import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, Unique, CreateDateCo
 import {IsEmail, Length} from 'class-validator'
 
 import Project from './project'
+import Offer from './offer'
 
 @Entity()
 @Unique(['email'])
@@ -27,4 +28,7 @@ export default class User extends BaseEntity {
 
   @OneToMany(type => Project, project => project.user)
   projects: Project[]
+
+  @OneToMany(type => Offer, offer => offer.user)
+  offers: Offer[]
 }

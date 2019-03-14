@@ -9,6 +9,7 @@ import { createConnection } from 'typeorm'
 // const db = require('./models')
 import usersRouter from './routes/users'
 import projectsRouter from './routes/projects'
+import offersRouter from './routes/offers'
 
 const app = express()
 
@@ -26,6 +27,7 @@ createConnection().then(connection => {
   app.use('/', express.static('apidoc'))
   app.use('/users', usersRouter)
   app.use('/projects', projectsRouter)
+  app.use('/offers', offersRouter)
 
   app.use('/secret', privateRoute, (req, res) => res.send(req.user))
 })

@@ -1,6 +1,7 @@
 import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne} from 'typeorm'
 
 import User from './user'
+import Offer from './offer'
 
 export enum State {
   UNVALID = "unvalid", 
@@ -45,4 +46,7 @@ export default class Project extends BaseEntity {
 
   @ManyToOne(type => User, user => user.projects)
   user: User
+
+  @ManyToOne(type => Offer, offer => offer.project)
+  offers: Offer[]
 }
