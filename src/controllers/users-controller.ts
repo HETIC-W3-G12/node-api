@@ -8,8 +8,7 @@ import * as passport from 'passport'
 export default class {
   async index(req, res) {
     const users = await User.createQueryBuilder('user')
-      .innerJoinAndSelect('user.projects', 'project')
-      .select(['user.id', 'project.id'])
+      .leftJoinAndSelect('user.projects', 'project')
       .getMany()
     res.json(users)
   }
