@@ -36,9 +36,13 @@ const router = express.Router()
  *  }]
  */
 router.get('/', async (req, res) => {
+  try{
     const offers = await Offer.createQueryBuilder('offer')
-        .getMany()
+                              .getMany()
     res.json(offers)
+  } catch(err) {
+    res.status(500).json(err)
+  }
 })
 
 export default router

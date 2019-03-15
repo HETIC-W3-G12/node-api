@@ -66,9 +66,13 @@ export default class {
    * GET user's projects
    */ 
   async projects(req, res) {
-    const users = await User.createQueryBuilder('user')
-                            .leftJoinAndSelect('user.projects', 'project')
-                            .getMany()
-    res.json(users)
+    try{
+      const users = await User.createQueryBuilder('user')
+                              .leftJoinAndSelect('user.projects', 'project')
+                              .getMany()
+      res.json(users)
+    } catch(err) {
+      res.status(500).json(err)
+    }
   }
 }

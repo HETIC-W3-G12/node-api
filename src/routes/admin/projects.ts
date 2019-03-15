@@ -11,10 +11,14 @@ const router = express.Router()
  * @apiPermission admin
  */
 router.get('/', async (req, res) => {
+  try{
     const projects = await Project.createQueryBuilder('project')
       .leftJoinAndSelect('project.user', 'user')
       .getMany()
     res.json(projects)
+  } catch(err) {
+    res.status(500).json(err)
+  }
 })
 
 /**

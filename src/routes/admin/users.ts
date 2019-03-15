@@ -10,10 +10,14 @@ const router = express.Router()
  * @apiPermission admin
  */
 router.get('/', async (req, res) => {
-    const users = await User.createQueryBuilder('user')
-                            .leftJoinAndSelect('user.projects', 'project')
-                            .getMany()
-    res.json(users)
+   try{ 
+      const users = await User.createQueryBuilder('user')
+                              .leftJoinAndSelect('user.projects', 'project')
+                              .getMany()
+      res.json(users)
+    } catch(err) {
+      res.status(500).json(err)
+    }
 })
 
 /**
@@ -23,8 +27,12 @@ router.get('/', async (req, res) => {
  * @apiPermission admin
  */
 router.get('/count', async (req, res) => {
-  const users = await User.count()
-  res.json(users)
+  try{ 
+    const users = await User.count()
+    res.json(users)
+  } catch(err) {
+    res.status(500).json(err)
+  }
 })
 
 export default router

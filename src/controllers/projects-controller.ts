@@ -7,10 +7,14 @@ export default class {
    * GET list of the project
    */ 
   async index(req, res) {
-    const projects = await Project.createQueryBuilder('project')
-                                  .where("project.state = :state", { state: "valid" })
-                                  .getMany()
-    res.json(projects)
+    try{
+      const projects = await Project.createQueryBuilder('project')
+                                    .where("project.state = :state", { state: "valid" })
+                                    .getMany()
+      res.json(projects)
+    } catch(err) {
+      res.status(500).json(err)
+    }
   }
 
   /**
