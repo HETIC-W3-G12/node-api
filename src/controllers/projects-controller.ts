@@ -3,15 +3,19 @@ import { pick, forEach } from 'lodash'
 import { validate } from 'class-validator'
 
 export default class {
-  /* list of the project */
+  /**
+   * GET list of the project
+   */ 
   async index(req, res) {
     const projects = await Project.createQueryBuilder('project')
-      .leftJoinAndSelect('project.user', 'user')
-      .getMany()
+                                  .where("project.state = :state", { state: "valid" })
+                                  .getMany()
     res.json(projects)
   }
 
-  /* get details of one project */
+  /**
+   * GET details of one project
+   */
   getOneProject(req, res) {
     Project.findOne({
       where: { id: req.params.id }
@@ -24,7 +28,9 @@ export default class {
       })
   }
 
-  /* create a new project */
+  /**
+   * CREATE a new project
+   */
   async create(req, res) {
 
     const params = pick(req.body, [
@@ -52,14 +58,5 @@ export default class {
         res.status(500).json(err)
       })
     }
-  }
-
-  /* update state of the project to running (has been founded) */
-  projectFounded(req, res) {
-    res.send('TODO')
-  }
-
-  getProjectByUser(req, res) {
-    res.send('TODO')
   }
 }

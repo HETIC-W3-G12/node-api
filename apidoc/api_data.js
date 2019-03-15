@@ -1,5 +1,50 @@
 define({ "api": [
   {
+    "type": "get",
+    "url": "/admin/projects",
+    "title": "Get all the project and user associed",
+    "group": "Admin_Project",
+    "version": "1.0.0",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
+    "filename": "src/routes/admin/projects.ts",
+    "groupTitle": "Admin_Project",
+    "name": "GetAdminProjects"
+  },
+  {
+    "type": "get",
+    "url": "/admin/users",
+    "title": "Get all the user",
+    "group": "Admin_Users",
+    "version": "1.0.0",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
+    "filename": "src/routes/admin/users.ts",
+    "groupTitle": "Admin_Users",
+    "name": "GetAdminUsers"
+  },
+  {
+    "type": "get",
+    "url": "/admin/users/count",
+    "title": "Count the number of user",
+    "group": "Admin_Users",
+    "version": "1.0.0",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
+    "filename": "src/routes/admin/users.ts",
+    "groupTitle": "Admin_Users",
+    "name": "GetAdminUsersCount"
+  },
+  {
     "type": "post",
     "url": "/offers",
     "title": "Create a new offer",
@@ -86,13 +131,6 @@ define({ "api": [
           },
           {
             "group": "Parameter",
-            "type": "Float",
-            "optional": false,
-            "field": "interests",
-            "description": "<p>Mandatory The interests decided for the refund.</p>"
-          },
-          {
-            "group": "Parameter",
             "type": "Integer",
             "optional": false,
             "field": "timeLaps",
@@ -105,41 +143,10 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n     \"id\":1,\n     \"title\":\"Un vélo pour Sam\",\n     \"user_uid\":3,\n     \"price\":200,\n     \"timeLaps\":3,\n     \"description\":\"Résolution 2019 ! Aller à mon travail en vélo, mais j'ai pas de vélo...\",\n     \"interests\":\"0%\",\n     \"state\":\"valid\",\n     \"createdAt\":\"2019-01-03T11:36:58.540Z\"\n    }",
+          "content": "HTTP/1.1 200 OK\n{\n     \"id\": \"afded117-dcc0-4a56-ada1-e2ff8663ea1e\",\n     \"title\":\"Un vélo pour Sam\",\n     \"price\":200,\n     \"timeLaps\":3,\n     \"description\":\"Résolution 2019 ! Aller à mon travail en vélo, mais j'ai pas de vélo...\",\n     \"interests\":0.015,\n     \"state\":\"valid\",\n     \"createdAt\":\"2019-01-03T11:36:58.540Z\"\n }",
           "type": "json"
         }
       ]
-    },
-    "filename": "src/routes/projects.ts",
-    "groupTitle": "Project"
-  },
-  {
-    "type": "post",
-    "url": "/projects/funded",
-    "title": "Project has been founded",
-    "version": "1.0.0",
-    "name": "FoundedProject",
-    "description": "<p>Link a project to an investor and update the status</p>",
-    "group": "Project",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Integer",
-            "optional": false,
-            "field": "projectId",
-            "description": "<p>Mandatory Id of the project.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "Integer",
-            "optional": false,
-            "field": "investorId",
-            "description": "<p>Mandatory Id of the investor.</p>"
-          }
-        ]
-      }
     },
     "filename": "src/routes/projects.ts",
     "groupTitle": "Project"
@@ -160,7 +167,7 @@ define({ "api": [
             "type": "integer",
             "optional": false,
             "field": "id",
-            "description": "<p>id of the project</p>"
+            "description": "<p>Mandatory Id of the project</p>"
           }
         ]
       }
@@ -169,7 +176,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n     \"id\":1,\n     \"title\":\"Un vélo pour Sam\",\n     \"user_uid\":3,\n     \"price\":200,\n     \"timeLaps\":3,\n     \"description\":\"Résolution 2019 ! Aller à mon travail en vélo, mais j'ai pas de vélo...\",\n     \"interests\":\"0%\",\n     \"state\":\"valid\",\n     \"createdAt\":\"2019-01-03T11:36:58.540Z\"\n    }",
+          "content": "HTTP/1.1 200 OK\n{\n     \"id\": \"afded117-dcc0-4a56-ada1-e2ff8663ea1e\",\n     \"title\":\"Un vélo pour Sam\",\n     \"price\":200,\n     \"timeLaps\":3,\n     \"description\":\"Résolution 2019 ! Aller à mon travail en vélo, mais j'ai pas de vélo...\",\n     \"interests\": 0.015,\n     \"state\":\"valid\",\n     \"createdAt\":\"2019-01-03T11:36:58.540Z\"\n }",
           "type": "json"
         }
       ]
@@ -189,28 +196,13 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n[{\n     \"id\":1,\n     \"title\":\"Un vélo pour Sam\",\n     \"user_uid\":3,\n     \"price\":200,\n     \"timeLaps\":3,\n     \"description\":\"Résolution 2019 ! Aller à mon travail en vélo, mais j'ai pas de vélo...\",\n     \"interests\":\"0%\",\n     \"state\":\"valid\",\n     \"createdAt\":\"2019-01-03T11:36:58.540Z\"\n    }]",
+          "content": "HTTP/1.1 200 OK\n[{\n     \"id\": \"afded117-dcc0-4a56-ada1-e2ff8663ea1e\",\n     \"title\":\"Un vélo pour Sam\",\n     \"price\":200,\n     \"timeLaps\":3,\n     \"description\":\"Résolution 2019 ! Aller à mon travail en vélo, mais j'ai pas de vélo...\",\n     \"interests\": 0.015,\n     \"state\":\"valid\",\n     \"createdAt\":\"2019-01-03T11:36:58.540Z\"\n }]",
           "type": "json"
         }
       ]
     },
     "filename": "src/routes/projects.ts",
     "groupTitle": "Project"
-  },
-  {
-    "type": "get",
-    "url": "/users",
-    "title": "Get all the user",
-    "group": "Users",
-    "version": "1.0.0",
-    "permission": [
-      {
-        "name": "admin"
-      }
-    ],
-    "filename": "src/routes/users.ts",
-    "groupTitle": "Users",
-    "name": "GetUsers"
   },
   {
     "type": "GET",
@@ -266,14 +258,63 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "email",
-            "description": "<p>user unique email.</p>"
+            "description": "<p>Mandatory user unique email</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
             "field": "password",
-            "description": "<p>user password.</p>"
+            "description": "<p>Mandatory user password, more than 6 caracters and less than 72</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "firstname",
+            "description": "<p>Mandatory user firstname</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "lastname",
+            "description": "<p>Mandatory user lastname</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "optional": false,
+            "field": "birthdate",
+            "description": "<p>Mandatory user birthdate, Timestamp Unix</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "birthplace",
+            "description": "<p>Mandatory user birthplace</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "adress",
+            "description": "<p>Mandatory user adress</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "city",
+            "description": "<p>Mandatory user city</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Interger",
+            "optional": false,
+            "field": "poste",
+            "description": "<p>code Mandatory user poste code</p>"
           }
         ]
       }

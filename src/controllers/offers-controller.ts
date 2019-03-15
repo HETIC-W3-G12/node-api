@@ -5,14 +5,9 @@ import { pick, forEach } from 'lodash'
 import { validate } from 'class-validator'
 
 export default class {
-  /* list of the existing offers */
-  async index(req, res) {
-    const offers = await Offer.createQueryBuilder('offer')
-      .getMany()
-    res.json(offers)
-  }
-
-  /* create a new offer */
+  /**
+   * CREATE a new offer
+   */ 
   async create(req, res) {
 
     const params = pick(req.body, ['project_id'])

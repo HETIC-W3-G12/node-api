@@ -10,17 +10,39 @@ export default class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
-  @Column()
+  @Column({nullable: false})
   @IsEmail()
   email: string
 
-  @Column({ select: false })
+  @Column({
+    select: false,
+    nullable: false
+  })
   @Length(6, 72)
   password: string
 
-  @Column({
-    default: false
-  })
+  @Column({nullable: false})
+  firstname: string
+
+  @Column({nullable: false})
+  lastname: string
+  
+  @Column({nullable: false})
+  birthdate: Date
+
+  @Column({nullable: false})
+  birthplace: string
+
+  @Column({nullable: false})
+  adress: string
+
+  @Column({nullable: false})
+  city: string
+
+  @Column({nullable: false})
+  postCode: number
+
+  @Column({default: false})
   admin: boolean
 
   @CreateDateColumn()

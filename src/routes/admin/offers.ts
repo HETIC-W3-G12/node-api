@@ -1,21 +1,18 @@
-const express = require('express')
-const router = express.Router()
-import { privateRoute } from '../passport'
+import Offer from '../../entities/offer' 
+import * as express from 'express'
 
-import OffersController from '../controllers/offers-controller'
+const router = express.Router()
 
 /**
- * @api {post} /offers Create a new offer
+ * @api {get} /admin/offers Get all the offers
+ * @apiGroup Admin Offers
  * @apiVersion 1.0.0
- * @apiName CreateOffer
- * @apiDescription Create a new offer
- * @apiGroup Offer
- *
- * @apiParam {String} project_id   Mandatory - Project's id.
- *
- * @apiSuccessExample {json} Success-Response:
+ * 
+ * @apiPermission admin
+ * 
+ *  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *     {
+ *     [{
  *      "user": {
  *          "id": "56a407a0-2527-4981-9e8c-d44f93b0a8f3",
  *          "email": "samantha.chery@hetic.net",
@@ -36,8 +33,12 @@ import OffersController from '../controllers/offers-controller'
  *      "createdDate": "2019-03-14T12:48:38.294Z",
  *      "signed_by_owner": false,
  *      "signed_by_investor": false
- *  }
+ *  }]
  */
-router.post('/', privateRoute, new OffersController().create)
+router.get('/', async (req, res) => {
+    const offers = await Offer.createQueryBuilder('offer')
+        .getMany()
+    res.json(offers)
+})
 
 export default router
