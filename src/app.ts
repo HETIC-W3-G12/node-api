@@ -10,6 +10,7 @@ import { createConnection } from 'typeorm'
 import usersRouter from './routes/users'
 import projectsRouter from './routes/projects'
 import offersRouter from './routes/offers'
+import adminRouter from './routes/admin'
 
 const app = express()
 
@@ -28,6 +29,9 @@ createConnection().then(connection => {
   app.use('/users', usersRouter)
   app.use('/projects', projectsRouter)
   app.use('/offers', offersRouter)
+
+  
+  app.use('/admin', privateRoute, adminRouter)
 
   app.use('/secret', privateRoute, (req, res) => res.send(req.user))
 })

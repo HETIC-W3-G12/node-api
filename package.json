@@ -10,7 +10,7 @@
   "dependencies": {
     "@types/node": "^10.12.18",
     "apidoc": "^0.17.7",
-    "bcrypt": "^3.0.3",
+    "bcrypt": "^2",
     "class-validator": "^0.9.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",

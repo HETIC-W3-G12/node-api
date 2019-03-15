@@ -1,22 +1,32 @@
 import User from '../entities/user'
 import Project from '../entities/project'
+
 import { validate } from 'class-validator'
+import { pick, forEach } from 'lodash'
+
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import * as passport from 'passport'
 
 export default class {
-  async index(req, res) {
-    const users = await User.createQueryBuilder('user')
-      .leftJoinAndSelect('user.projects', 'project')
-      .getMany()
-    res.json(users)
-  }
 
+  /**
+   * CREATE a new user
+   */ 
   async create(req, res) {
+
+    const params = pick(req.body, [
+      'firstname', 'lastname', 'adress', 'city', 'postCode', 'birthplace', 
+      'email', 'password'
+    ])
+
     const user = new User()
-    user.email = req.body.email
-    user.password = req.body.password
+
+    user.birthdate = new Date(req.body.birthdate)
+
+    forEach(params, (value, key) => {
+      user[key] = value
+    })
 
     const errors = await validate(user)
     if (errors.length > 0) {
@@ -31,6 +41,9 @@ export default class {
     }
   }
 
+  /**
+   * CONNECT the user and retrieve the token
+   */ 
   signIn(req, res) {
     passport.authenticate('local', { session: false }, (err, user, info) => {
       if (err || !user) {
@@ -49,12 +62,17 @@ export default class {
     })(req, res)
   }
 
+  /**
+   * GET user's projects
+   */ 
   async projects(req, res) {
-    const projects = await Project.find({
-      where: { user: req.user }
-    }).catch(err => {
+    try{
+      const users = await User.createQueryBuilder('user')
+                              .leftJoinAndSelect('user.projects', 'project')
+                              .getMany()
+      res.json(users)
+    } catch(err) {
       res.status(500).json(err)
-    })
-    res.json(projects)
+    }
   }
 }
