@@ -30,7 +30,7 @@ router.post('/sign_up', new UsersController().create)
 router.post('/sign_in', new UsersController().signIn)
 
 /**
- * @api {GET} /users/projects User projects
+ * @api {GET} /users/projects User's projects
  * @apiGroup Users
  * @apiVersion 1.0.0
  */

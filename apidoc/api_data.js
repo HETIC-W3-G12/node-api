@@ -1,6 +1,30 @@
 define({ "api": [
   {
     "type": "get",
+    "url": "/admin/offers",
+    "title": "Get all the offers",
+    "group": "Admin_Offers",
+    "version": "1.0.0",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "   HTTP/1.1 200 OK\n   [{\n    \"user\": {\n        \"id\": \"56a407a0-2527-4981-9e8c-d44f93b0a8f3\",\n        \"email\": \"samantha.chery@hetic.net\",\n        \"admin\": false\n    },\n    \"project\": {\n        \"id\": \"61476be1-fc5f-4e20-ab0a-c8395bd8a45c\",\n        \"title\": \"Un vélo\",\n        \"description\": \"svp c'est pour bb\",\n        \"price\": 300,\n        \"interests\": 0.1,\n        \"state\": \"unvalid\",\n        \"timeLaps\": 3,\n        \"createdDate\": \"2019-03-14T08:49:43.790Z\"\n    },\n    \"state\": \"waiting\",\n    \"id\": \"e2cdf473-8e19-46e1-95ed-f89ca4a74f23\",\n    \"createdDate\": \"2019-03-14T12:48:38.294Z\",\n    \"signed_by_owner\": false,\n    \"signed_by_investor\": false\n}]",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/routes/admin/offers.ts",
+    "groupTitle": "Admin_Offers",
+    "name": "GetAdminOffers"
+  },
+  {
+    "type": "get",
     "url": "/admin/projects",
     "title": "Get all the project and user associed",
     "group": "Admin_Project",
@@ -13,6 +37,34 @@ define({ "api": [
     "filename": "src/routes/admin/projects.ts",
     "groupTitle": "Admin_Project",
     "name": "GetAdminProjects"
+  },
+  {
+    "type": "get",
+    "url": "/admin/projects/valid/:id",
+    "title": "Validation of the project",
+    "group": "Admin_Project",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Mandatory Id of the project</p>"
+          }
+        ]
+      }
+    },
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
+    "filename": "src/routes/admin/projects.ts",
+    "groupTitle": "Admin_Project",
+    "name": "GetAdminProjectsValidId"
   },
   {
     "type": "get",
@@ -60,7 +112,7 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "project_id",
-            "description": "<p>Mandatory Project's id.</p>"
+            "description": "<p>Mandatory - Project's id.</p>"
           }
         ]
       }
@@ -70,26 +122,6 @@ define({ "api": [
         {
           "title": "Success-Response:",
           "content": "   HTTP/1.1 200 OK\n   {\n    \"user\": {\n        \"id\": \"56a407a0-2527-4981-9e8c-d44f93b0a8f3\",\n        \"email\": \"samantha.chery@hetic.net\",\n        \"admin\": false\n    },\n    \"project\": {\n        \"id\": \"61476be1-fc5f-4e20-ab0a-c8395bd8a45c\",\n        \"title\": \"Un vélo\",\n        \"description\": \"svp c'est pour bb\",\n        \"price\": 300,\n        \"interests\": 0.1,\n        \"state\": \"unvalid\",\n        \"timeLaps\": 3,\n        \"createdDate\": \"2019-03-14T08:49:43.790Z\"\n    },\n    \"state\": \"waiting\",\n    \"id\": \"e2cdf473-8e19-46e1-95ed-f89ca4a74f23\",\n    \"createdDate\": \"2019-03-14T12:48:38.294Z\",\n    \"signed_by_owner\": false,\n    \"signed_by_investor\": false\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "src/routes/offers.ts",
-    "groupTitle": "Offer"
-  },
-  {
-    "type": "get",
-    "url": "/offers",
-    "title": "Get all the offers",
-    "version": "1.0.0",
-    "name": "Offers",
-    "description": "<p>Get all the offers</p>",
-    "group": "Offer",
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "   HTTP/1.1 200 OK\n   [{\n    \"user\": {\n        \"id\": \"56a407a0-2527-4981-9e8c-d44f93b0a8f3\",\n        \"email\": \"samantha.chery@hetic.net\",\n        \"admin\": false\n    },\n    \"project\": {\n        \"id\": \"61476be1-fc5f-4e20-ab0a-c8395bd8a45c\",\n        \"title\": \"Un vélo\",\n        \"description\": \"svp c'est pour bb\",\n        \"price\": 300,\n        \"interests\": 0.1,\n        \"state\": \"unvalid\",\n        \"timeLaps\": 3,\n        \"createdDate\": \"2019-03-14T08:49:43.790Z\"\n    },\n    \"state\": \"waiting\",\n    \"id\": \"e2cdf473-8e19-46e1-95ed-f89ca4a74f23\",\n    \"createdDate\": \"2019-03-14T12:48:38.294Z\",\n    \"signed_by_owner\": false,\n    \"signed_by_investor\": false\n}]",
           "type": "json"
         }
       ]
@@ -207,7 +239,7 @@ define({ "api": [
   {
     "type": "GET",
     "url": "/users/projects",
-    "title": "User projects",
+    "title": "User's projects",
     "group": "Users",
     "version": "1.0.0",
     "filename": "src/routes/users.ts",
@@ -265,7 +297,7 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "password",
-            "description": "<p>Mandatory user password, more than 6 caracters and less than 72</p>"
+            "description": "<p>{6..72} Mandatory user password</p>"
           },
           {
             "group": "Parameter",
@@ -313,8 +345,8 @@ define({ "api": [
             "group": "Parameter",
             "type": "Interger",
             "optional": false,
-            "field": "poste",
-            "description": "<p>code Mandatory user poste code</p>"
+            "field": "posteCode",
+            "description": "<p>Mandatory user poste code</p>"
           }
         ]
       }
