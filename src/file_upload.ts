@@ -11,31 +11,11 @@ const bucketParams = {
 AWS.config.update({ region: 'eu-west-3' })
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' })
 
-export const uploadFile = (file = '', ACL = 'private') => {
-  return new Promise((resolve, reject) => {
-    s3.upload(
-      { ACL, Bucket: bucketParams.Bucket, Body: file, Key: uuid() },
-      (err, data) => {
-        if (err) {
-          reject(err)
-        }
-        if (data) {
-          resolve(data)
-        }
-      }
-    )
-  })
-}
+export const uploadFile = (file = '', ACL = 'private') => 
+  s3.upload({ ACL, Bucket: bucketParams.Bucket, Body: file, Key: uuid() }).promise()
 
-export const getFile = Key => {
-  return new Promise((resolve, reject) => {
-    s3.getObject({ Bucket: bucketParams.Bucket, Key }, (err, data) => {
-      if (err) reject(err.stack)
-      // an error occurred
-      else resolve(data) // successful response
-    })
-  })
-}
+export const getFile = Key =>
+  s3.getObject({ Bucket: bucketParams.Bucket, Key }).promise()
 
 // uploadFile('ça marche', 'public-read').then(resp => {
 //   console.log(resp)
