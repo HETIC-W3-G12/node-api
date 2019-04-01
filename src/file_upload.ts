@@ -17,17 +17,6 @@ export const uploadFile = (file = '', ACL = 'private') =>
 export const getFile = Key =>
   s3.getObject({ Bucket: bucketParams.Bucket, Key }).promise()
 
-// uploadFile('ça marche', 'public-read').then(resp => {
-//   console.log(resp)
-// })
-// getFile('06db7fb0-5486-11e9-8a24-e36ffb5f701b')
-//   .then(resp => {
-//     console.log(resp)
-//   })
-//   .catch(err => {
-//     console.log(err)
-//   })
-
 const createBucket = () => {
   console.log('Creating bucket...')
   s3.createBucket(bucketParams, (err, data) => {
