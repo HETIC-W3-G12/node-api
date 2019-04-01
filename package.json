@@ -3,6 +3,7 @@
   "scripts": {
     "start": "ts-node ./node_modules/typeorm/cli.js migration:run && ts-node -T ./bin/www",
     "dev": "nodemon --watch",
+    "file": "ts-node src/file_upload.ts",
     "c": "ts-node ./repl.ts",
     "doc": "apidoc -i src/routes/ -o apidoc/",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js"
@@ -10,6 +11,7 @@
   "dependencies": {
     "@types/node": "^10.12.18",
     "apidoc": "^0.17.7",
+    "aws-sdk": "^2.432.0",
     "bcrypt": "^2",
     "class-validator": "^0.9.1",
     "cookie-parser": "~1.4.3",
@@ -27,7 +29,8 @@
     "reflect-metadata": "^0.1.12",
     "ts-node": "^7.0.1",
     "typeorm": "^0.2.11",
-    "typescript": "^3.2.2"
+    "typescript": "^3.2.2",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "eslint": "^5.11.1",
