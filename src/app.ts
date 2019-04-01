@@ -23,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-
 // createConnection method will automatically read connection options
 // from your ormconfig file or environment variables
 createConnection().then(connection => {
+  require('./file_upload')
   require('./passport')
 
   app.use('/', express.static('apidoc'))

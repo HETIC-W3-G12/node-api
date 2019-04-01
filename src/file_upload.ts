@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 import * as AWS from 'aws-sdk'
 import * as uuid from 'uuid/v1'
 
@@ -35,5 +33,5 @@ s3.listBuckets((err, data) => {
     !(data.Buckets.filter(e => e.Name === bucketParams.Bucket).length > 0)
   ) {
     createBucket()
-  } // else console.log(data)
+  } else console.log(data)
 })
