@@ -5,7 +5,8 @@
     "dev": "nodemon --watch",
     "c": "ts-node ./repl.ts",
     "doc": "apidoc -i src/routes/ -o apidoc/",
-    "typeorm": "ts-node ./node_modules/typeorm/cli.js"
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js",
+    "test": "jest"
   },
   "dependencies": {
     "@types/node": "^10.12.18",
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "eslint": "^5.11.1",
+    "jest": "^24.5.0",
     "nodemon": "^1.18.9",
     "typescript-eslint-parser": "^21.0.2"
   }
