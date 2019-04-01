@@ -22,7 +22,21 @@ export const uploadFile = (file = '', ACL = 'private') => {
   })
 }
 
-uploadFile('ça marche', 'public-read')
+export const getFile = (Key) => {
+  return new Promise((resolve, reject) => {
+    s3.getObject({Bucket: bucketParams.Bucket, Key}, (err, data) => {
+      if (err) reject(err.stack) // an error occurred
+      else     resolve(data)     // successful response
+    })
+  })
+}
+
+// uploadFile('ça marche', 'public-read')
+getFile('a89e6880-5463-11e9-845c-db205f68e499').then(resp => {
+  console.log(resp)
+}).catch(err => {
+  console.log(err)
+})
 
 const createBucket = () => {
   console.log('Creating bucket...')
@@ -42,5 +56,5 @@ s3.listBuckets((err, data) => {
     !(data.Buckets.filter(e => e.Name === bucketParams.Bucket).length > 0)
   ) {
     createBucket()
-  } else console.log(data)
+  } // else console.log(data)
 })
