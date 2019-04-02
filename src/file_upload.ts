@@ -10,7 +10,7 @@ AWS.config.update({ region: 'eu-west-3' })
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' })
 
 export const uploadFile = (data, name, ACL = 'private') => 
-  s3.upload({ ACL, Bucket: bucketParams.Bucket, Body: data, Key: `${uuid()}-${name}` }).promise()
+  s3.upload({ ACL, Bucket: bucketParams.Bucket, Body: new Buffer(data, 'base64'), Key: `${uuid()}-${name}` }).promise()
 
 export const getFile = Key =>
   s3.getObject({ Bucket: bucketParams.Bucket, Key }).promise()
