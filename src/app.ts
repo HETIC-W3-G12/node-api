@@ -11,6 +11,7 @@ import usersRouter from './routes/users'
 import projectsRouter from './routes/projects'
 import offersRouter from './routes/offers'
 import adminRouter from './routes/admin'
+import fileTestRouter from './routes/file-test'
 
 const app = express()
 
@@ -35,6 +36,8 @@ createConnection().then(connection => {
   app.use('/admin', privateRoute, adminRouter)
 
   app.use('/secret', privateRoute, (req, res) => res.send(req.user))
+
+  app.use('/file-test', fileTestRouter)
 })
 
 module.exports = app
