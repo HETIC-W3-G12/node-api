@@ -16,7 +16,7 @@ import UsersController from '../controllers/users-controller'
  * @apiParam {String} birthplace Mandatory user birthplace
  * @apiParam {String} adress Mandatory user adress
  * @apiParam {String} city Mandatory user city
- * @apiParam {Interger} posteCode Mandatory user poste code
+ * @apiParam {Interger} postCode Mandatory user poste code
  */
 router.post('/sign_up', new UsersController().create)
 
