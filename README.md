@@ -38,6 +38,8 @@ Convention de nommage :
 - DB_USER (généralement le user de la session système : `echo $USER`)
 - DB_PASS (facultatif → default: `''`)
 - JWT_SECRET (une chaine de caractère pour générer les JWT)
+- AWS_ACCESS_KEY_ID → https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/getting-your-credentials.html avec la policy `AmazonS3FullAccess`
+- AWS_SECRET_ACCESS_KEY
 
 ## Scripts npm
 
