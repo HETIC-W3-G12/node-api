@@ -11,7 +11,8 @@
   "dependencies": {
     "@types/node": "^10.12.18",
     "apidoc": "^0.17.7",
-    "bcrypt": "^2",
+    "aws-sdk": "^2.432.0",
+    "bcrypt": "^2.0.1",
     "class-validator": "^0.9.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
@@ -28,7 +29,8 @@
     "reflect-metadata": "^0.1.12",
     "ts-node": "^7.0.1",
     "typeorm": "^0.2.11",
-    "typescript": "^3.2.2"
+    "typescript": "^3.2.2",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "eslint": "^5.11.1",
