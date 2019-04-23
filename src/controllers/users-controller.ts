@@ -103,4 +103,29 @@ export default class {
       res.status(500).json(err)
     }
   }
+
+  async updateFacePhoto(req, res) {
+    try {
+      const user = await User.findOne(req.user.id)
+      const file = await uploadFile(req.body.file, 'face_photo')
+
+      user.face_photo_key = file.Key
+      user.save().then(resp => {
+        res.json({ message: 'Face photo file saved' })
+      })
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  }
+
+  async getFacePhoto(req, res) {
+    try {
+      const user = await User.findOne(req.user.id)
+      getFile(user.face_photo_key).then(resp => {
+        res.json(resp)
+      })
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  }
 }
