@@ -32,11 +32,10 @@ createConnection().then(connection => {
   app.use('/projects', projectsRouter)
   app.use('/offers', offersRouter)
 
-  
   app.use('/admin', privateRoute, adminRouter)
 
+  // TEST ROUTES
   app.use('/secret', privateRoute, (req, res) => res.send(req.user))
-
   app.use('/file-test', fileTestRouter)
 })
 

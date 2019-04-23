@@ -34,7 +34,9 @@ export default class {
     } else {
       user.password = await bcrypt.hash(req.body.password, 10)
       user.save().then(user => {
-        res.json(user)
+        res.json(pick(user, [
+          'firstname', 'lastname', 'adress', 'city', 'postCode', 'birthplace', 'email'
+        ]))
       }).catch(err => {
         res.status(500).json(err)
       })
