@@ -1,5 +1,4 @@
 import User from '../entities/user'
-import Project from '../entities/project'
 
 import { validate } from 'class-validator'
 import { pick, forEach } from 'lodash'
@@ -7,6 +6,8 @@ import { pick, forEach } from 'lodash'
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import * as passport from 'passport'
+
+import { getFile, uploadFile } from '../file_upload'
 
 export default class {
 
@@ -74,6 +75,31 @@ export default class {
                               .getMany()
       res.json(users)
     } catch(err) {
+      res.status(500).json(err)
+    }
+  }
+
+  async updateIdentity(req, res) {
+    try {
+      const user = await User.findOne(req.user.id)
+      const file = await uploadFile(req.body.file, 'identity')
+
+      user.identity_key = file.Key
+      user.save().then(resp => {
+        res.json({ message: 'Idendity file saved' })
+      })
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  }
+
+  async getIdentity(req, res) {
+    try {
+      const user = await User.findOne(req.user.id)
+      getFile(user.identity_key).then(resp => {
+        res.json(resp)
+      })
+    } catch (err) {
       res.status(500).json(err)
     }
   }

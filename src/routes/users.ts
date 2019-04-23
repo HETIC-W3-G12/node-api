@@ -36,4 +36,10 @@ router.post('/sign_in', new UsersController().signIn)
  */
 router.get('/projects', privateRoute, new UsersController().projects)
 
+router.post('/identity', privateRoute, new UsersController().updateIdentity)
+router.get('/identity', privateRoute, new UsersController().getIdentity)
+
+// router.post('/face_photo', privateRoute)
+// router.get('/face_photo', privateRoute)
+
 export default router
