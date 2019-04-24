@@ -35,9 +35,19 @@ export default class {
     } else {
       user.password = await bcrypt.hash(req.body.password, 10)
       user.save().then(user => {
-        res.json(pick(user, [
-          'firstname', 'lastname', 'adress', 'city', 'postCode', 'birthplace', 'email'
-        ]))
+        const { password,...withoutPassword } = user
+        const token = jwt.sign(withoutPassword, process.env.JWT_SECRET, (err, token) => {
+          console.log(err)
+          res.json({
+            info: {
+              message: 'Account created'
+            },
+            token,
+            user: pick(user, [
+            'firstname', 'lastname', 'adress', 'city', 'postCode', 'birthplace', 'email'
+            ])
+          })
+        })
       }).catch(err => {
         res.status(500).json(err)
       })
