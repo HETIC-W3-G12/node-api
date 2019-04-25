@@ -3,6 +3,7 @@ const passportJWT = require('passport-jwt')
 const JWTStrategy = passportJWT.Strategy
 const ExtractJWT = passportJWT.ExtractJwt
 import * as bcrypt from 'bcrypt'
+import { pick } from 'lodash'
 
 import User from './entities/user'
 
@@ -16,7 +17,7 @@ passport.use(
     (email, password, cb) => {
       //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
       return User.findOne({
-        select: ['id', 'email', 'password'],
+        select: ['id', 'email', 'password', 'firstname', 'lastname', 'birthdate', 'birthplace', 'adress', 'city', 'postCode'],
         where: { email }
       })
         .then(user => {
@@ -27,7 +28,7 @@ passport.use(
           }
           bcrypt.compare(password, user.password).then(function(res) {
             if (res) {
-              return cb(null, {email: user.email, id: user.id}, {
+              return cb(null, pick(user, ['id', 'email', 'firstname', 'lastname', 'birthdate', 'birthplace', 'adress', 'city', 'postCode']), {
                 message: 'Logged In Successfully'
               })
             } else return cb(null, false, {

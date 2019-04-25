@@ -42,6 +42,12 @@ export default class User extends BaseEntity {
   @Column({nullable: false})
   postCode: number
 
+  @Column({nullable: true})
+  identity_key: string
+
+  @Column({nullable: true})
+  face_photo_key: string
+
   @Column({default: false})
   admin: boolean
 

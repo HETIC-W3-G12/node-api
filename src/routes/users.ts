@@ -36,4 +36,34 @@ router.post('/sign_in', new UsersController().signIn)
  */
 router.get('/projects', privateRoute, new UsersController().projects)
 
+/**
+ * @api {post} /users/identity Upload user's identity file
+ * @apiGroup Users
+ * @apiVersion 1.0.0
+ * @apiParam {String} file base64 file
+ */
+router.post('/identity', privateRoute, new UsersController().updateIdentity)
+
+/**
+ * @api {GET} /users/identity User's identity file
+ * @apiGroup Users
+ * @apiVersion 1.0.0
+ */
+router.get('/identity', privateRoute, new UsersController().getIdentity)
+
+/**
+ * @api {post} /users/face_photo Upload user's face photo file
+ * @apiGroup Users
+ * @apiVersion 1.0.0
+ * @apiParam {String} file base64 file
+ */
+router.post('/face_photo', privateRoute, new UsersController().updateFacePhoto)
+
+/**
+ * @api {GET} /users/face_photo User's face photo file
+ * @apiGroup Users
+ * @apiVersion 1.0.0
+ */
+router.get('/face_photo', privateRoute, new UsersController().getFacePhoto)
+
 export default router
