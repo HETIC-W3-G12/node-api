@@ -6,6 +6,7 @@ import Offer from './offer'
 export enum State {
   UNVALID = "unvalid", 
   VALID = "valid", 
+  WAITING = "waiting",
   RUNNING = "running", 
   COMPLETE = "complete", 
   CANCELED = "canceled"
@@ -49,4 +50,7 @@ export default class Project extends BaseEntity {
 
   @ManyToOne(type => Offer, offer => offer.project)
   offers: Offer[]
+
+  @Column({nullable: true})
+  signature_owner_photo_key: string
 }

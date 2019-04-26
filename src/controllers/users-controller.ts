@@ -1,4 +1,6 @@
 import User from '../entities/user'
+import Project from '../entities/project'
+import Offer from '../entities/offer'
 
 import { validate } from 'class-validator'
 import { pick, forEach } from 'lodash'
@@ -17,8 +19,8 @@ export default class {
   async create(req, res) {
 
     const params = pick(req.body, [
-      'firstname', 'lastname', 'adress', 'city', 'postCode', 'birthplace', 
-      'email', 'password'
+      'email', 'password', 'firstname', 'lastname', 'adress', 'city', 'postCode', 
+      'birthdate', 'birthplace'
     ])
 
     const user = new User()
@@ -28,6 +30,7 @@ export default class {
     forEach(params, (value, key) => {
       user[key] = value
     })
+
 
     const errors = await validate(user)
     if (errors.length > 0) {
@@ -76,14 +79,25 @@ export default class {
   }
 
   /**
-   * GET user's projects
+   * GET user's dashboard
    */ 
-  async projects(req, res) {
+  async dashboard(req, res) {
     try{
-      const users = await User.createQueryBuilder('user')
-                              .leftJoinAndSelect('user.projects', 'project')
+      const projects = await Project.createQueryBuilder('project')
+                              .where("project.user = :id", { id: req.user.id })
                               .getMany()
-      res.json(users)
+      
+      const offers = await Offer.createQueryBuilder('offer')
+                                .where("offer.user = :id", { id: req.user.id })
+                                .leftJoinAndSelect('offer.project', 'project')
+                                .getMany()
+      
+      const response = {
+        "projects": projects,
+        "offers": offers
+      }
+      
+      res.json(response)
     } catch(err) {
       res.status(500).json(err)
     }

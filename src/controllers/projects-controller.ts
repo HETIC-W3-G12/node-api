@@ -24,8 +24,8 @@ export default class {
     Project.findOne({
       where: { id: req.params.id }
     })
-      .then(projects => {
-        res.json(projects)
+      .then(project => {
+        res.json(project)
       })
       .catch(err => {
         res.status(404).json(err)
