@@ -1,5 +1,5 @@
 import Offer, { State as StateEnum } from '../entities/offer'
-import Project from '../entities/project'
+import Project, {State as StateProjectEnum}  from '../entities/project'
 
 import { pick, forEach } from 'lodash'
 import { validate } from 'class-validator'
@@ -17,6 +17,9 @@ export default class {
     offer.user = req.user
     const project = await Project.findOne(Project, params['project_id'])
 
+    project.state = StateProjectEnum.WAITING;
+    project.save()
+
     offer.project = project
     offer.state = StateEnum.WAITING
 
@@ -29,6 +32,71 @@ export default class {
       }).catch(err => {
           res.status(500).json(err)
       })
+    }
+  }
+
+  /*
+  * Refuse offer
+  */ 
+  async refuseOffer(req, res) {
+    const params = pick(req.body, ['offer_id'])
+    const offer = await Offer.findOne(Offer, params['offer_id'])
+
+    // update project
+    const project = await Project.findOne(offer.project)
+    project.state = StateProjectEnum.VALID;
+    project.save()
+
+    offer.state = StateEnum.REFUSED
+    const errors = await validate(offer)
+    if (errors.length > 0) {
+        res.status(400).json(errors)
+    } else {
+      offer.save().then(offer => {
+          res.status(200).json(offer)
+      }).catch(err => {
+          res.status(500).json(err)
+      })
+    }
+  }
+
+  /*
+  * Accept offer
+  */ 
+  async acceptOffer(req, res) {
+    const params = pick(req.body, ['offer_id'])
+
+    const offer = await Offer.findOne(Offer, params['offer_id'])
+    offer.state = StateEnum.ACCEPTED
+    
+    // update project
+    const project = await Project.findOne(offer.project)
+    project.state = StateProjectEnum.RUNNING;
+    project.save()
+
+    const errors = await validate(offer)
+    if (errors.length > 0) {
+        res.status(400).json(errors)
+    } else {
+      offer.save().then(offer => {
+          res.status(200).json(offer)
+      }).catch(err => {
+          res.status(500).json(err)
+      })
+    }
+  }
+
+  /**
+   * GET list of the offers -- to test and debug
+   */ 
+  async index(req, res) {
+    try{
+      const offers = await Offer.createQueryBuilder('offer')
+                                .leftJoinAndSelect('offer.user', 'user')
+                                .getMany()
+      res.json(offers)
+    } catch(err) {
+      res.status(500).json(err)
     }
   }
 }
