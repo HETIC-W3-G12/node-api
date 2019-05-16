@@ -27,7 +27,7 @@ export default class Project extends BaseEntity {
   price: number
 
   @Column({
-    default: 0.01, 
+    default: 0.1, 
     type: 'float'
   })
   interests: number
