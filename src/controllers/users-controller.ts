@@ -83,9 +83,9 @@ export default class {
    */ 
   async dashboard(req, res) {
     try{
-      const projects = await Project.createQueryBuilder('project')
+      const project = await Project.createQueryBuilder('project')
                               .where("project.user = :id", { id: req.user.id })
-                              .getMany()
+                              .getOne()
       
       const offers = await Offer.createQueryBuilder('offer')
                                 .where("offer.user = :id", { id: req.user.id })
@@ -93,7 +93,7 @@ export default class {
                                 .getMany()
       
       const response = {
-        "projects": projects,
+        "project": project,
         "offers": offers
       }
       

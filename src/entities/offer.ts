@@ -1,4 +1,4 @@
-import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne} from 'typeorm'
+import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, OneToMany} from 'typeorm'
 
 import User from './user'
 import Project from './project'
@@ -35,7 +35,6 @@ export default class Offer extends BaseEntity {
   @Column({nullable: true})
   signature_investor_photo_key: string
 
-  @ManyToOne(type => Refound, refound => refound.offer)
-  refounds: Refound
-
+  @OneToMany(type => Refound, refound => refound.offer)
+  refounds: Refound[]
 }

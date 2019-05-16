@@ -23,6 +23,8 @@ export default class {
   getOneProject(req, res) {
     Project.findOne({
       where: { id: req.params.id }
+      // ,
+      // relations: ["user"]
     })
       .then(project => {
         res.json(project)

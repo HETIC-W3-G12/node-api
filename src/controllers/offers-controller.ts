@@ -26,6 +26,7 @@ export default class {
     offer.state = StateEnum.WAITING
 
     const errors = await validate(offer)
+
     if (errors.length > 0) {
         res.status(400).json(errors)
     } else {
@@ -85,13 +86,17 @@ export default class {
       refound.state = StateRefoundEnum.WAITING;
       refound.amount = amountRefound
 
-      var d = new Date();
-      d.setMonth(d.getMonth() + i );
+      var d = new Date()
+      d.setMonth(d.getMonth() + i )
       refound.dueDate = d
+      refound.offer = offer
+      
+      // console.log('--------- ici')
+      // console.log(refound)
+      await refound.save()
 
-      refound.save()
     }
-  
+
     const errors = await validate(offer)
     if (errors.length > 0) {
         res.status(400).json(errors)
@@ -121,15 +126,18 @@ export default class {
   /**
    * GET details of an offer = all the refound deadlines 
    */
-  async refound(req, res){
-    try{
-      const offers = await Offer.createQueryBuilder('offer')
-                                .leftJoinAndSelect('offer.user', 'user')
-                                .getMany()
-      res.json(offers)
-    } catch(err) {
-      res.status(500).json(err)
-    }
+  async getDeadlinesRefound(req, res){
+
+    Offer.find({
+      where: { id: req.params.id },
+      relations: [ "refounds" ]
+    })
+      .then(offer => {
+        res.json(offer)
+      })
+      .catch(err => {
+        res.status(404).json(err)
+      })
   }
 }
 

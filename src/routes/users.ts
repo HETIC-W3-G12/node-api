@@ -51,8 +51,7 @@ router.post('/sign_in', new UsersController().signIn)
  *        "face_photo_key": null,
  *        "admin": false,
  *        "createdDate": "2019-04-26T07:12:59.365Z",
- *        "projects": [
- *           {
+ *        "projects": {
  *               "id": "b0e5e002-0be8-46be-a2ea-20fbf5426116",
  *               "title": "un vélo",
  *               "description": "svp c'est urgent",
@@ -62,8 +61,7 @@ router.post('/sign_in', new UsersController().signIn)
  *               "timeLaps": 3,
  *               "createdDate": "2019-04-26T07:16:14.010Z",
  *               "signature_owner_photo_key": null
- *           }
- *       ],
+ *        }
  *       "offers": [{
  *           "id": "49f59cab-7c0b-4951-8399-00996307771b",
  *           "state": "accepted",
