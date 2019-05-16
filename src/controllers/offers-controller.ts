@@ -1,5 +1,7 @@
 import Offer, { State as StateEnum } from '../entities/offer'
 import Project, {State as StateProjectEnum}  from '../entities/project'
+import Refound, {State as StateRefoundEnum}  from '../entities/refound'
+
 
 import { pick, forEach } from 'lodash'
 import { validate } from 'class-validator'
@@ -24,6 +26,7 @@ export default class {
     offer.state = StateEnum.WAITING
 
     const errors = await validate(offer)
+
     if (errors.length > 0) {
         res.status(400).json(errors)
     } else {
@@ -65,7 +68,7 @@ export default class {
   */ 
   async acceptOffer(req, res) {
     const params = pick(req.body, ['offer_id'])
-
+    
     const offer = await Offer.findOne(Offer, params['offer_id'])
     offer.state = StateEnum.ACCEPTED
     
@@ -73,6 +76,26 @@ export default class {
     const project = await Project.findOne(offer.project)
     project.state = StateProjectEnum.RUNNING;
     project.save()
+
+    // create the reafound deadlines 
+    var amountInterest = ( ( project.price * project.interests ) / 12 ) * project.timeLaps
+    var amountRefound = ( project.price + amountInterest ) / project.timeLaps
+
+    for(var i = 1; i <= project.timeLaps; i++){
+      const refound = new Refound()
+      refound.state = StateRefoundEnum.WAITING;
+      refound.amount = amountRefound
+
+      var d = new Date()
+      d.setMonth(d.getMonth() + i )
+      refound.dueDate = d
+      refound.offer = offer
+      
+      // console.log('--------- ici')
+      // console.log(refound)
+      await refound.save()
+
+    }
 
     const errors = await validate(offer)
     if (errors.length > 0) {
@@ -99,4 +122,23 @@ export default class {
       res.status(500).json(err)
     }
   }
+
+  /**
+   * GET details of an offer = all the refound deadlines 
+   */
+  async getDeadlinesRefound(req, res){
+
+    Offer.find({
+      where: { id: req.params.id },
+      relations: [ "refounds" ]
+    })
+      .then(offer => {
+        res.json(offer)
+      })
+      .catch(err => {
+        res.status(404).json(err)
+      })
+  }
 }
+
+
