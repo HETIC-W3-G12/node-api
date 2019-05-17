@@ -40,6 +40,7 @@ router.get('/', async (req, res) => {
     const offers = await Offer.createQueryBuilder('offer')
                               .leftJoinAndSelect('offer.user', 'user')
                               .leftJoinAndSelect('offer.project', 'project')
+                              .leftJoinAndSelect('offer.refunds', 'refund')
                               .getMany()
     res.json(offers)
   } catch(err) {

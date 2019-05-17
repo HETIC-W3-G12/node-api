@@ -85,6 +85,7 @@ export default class {
     try{
       const project = await Project.createQueryBuilder('project')
                               .where("project.user = :id", { id: req.user.id })
+                              .leftJoinAndSelect('project.offers', 'offer')
                               .getOne()
       
       const offers = await Offer.createQueryBuilder('offer')

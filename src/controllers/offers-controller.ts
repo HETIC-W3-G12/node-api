@@ -69,7 +69,10 @@ export default class {
   async acceptOffer(req, res) {
     const params = pick(req.body, ['offer_id'])
     
-    const offer = await Offer.findOne(Offer, params['offer_id'])
+    const offer = await Offer.createQueryBuilder('offer')
+                              .where("id = :id", { id: req.params.id })
+                              .getOne()
+
     offer.state = StateEnum.ACCEPTED
     
     // update project
