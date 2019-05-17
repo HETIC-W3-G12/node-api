@@ -1,6 +1,6 @@
 import Offer, { State as StateEnum } from '../entities/offer'
 import Project, {State as StateProjectEnum}  from '../entities/project'
-import Refound, {State as StateRefoundEnum}  from '../entities/refound'
+import Refund, {State as StateRefundEnum}  from '../entities/refund'
 
 
 import { pick, forEach } from 'lodash'
@@ -79,21 +79,21 @@ export default class {
 
     // create the reafound deadlines 
     var amountInterest = ( ( project.price * project.interests ) / 12 ) * project.timeLaps
-    var amountRefound = ( project.price + amountInterest ) / project.timeLaps
+    var amountRefund = ( project.price + amountInterest ) / project.timeLaps
 
     for(var i = 1; i <= project.timeLaps; i++){
-      const refound = new Refound()
-      refound.state = StateRefoundEnum.WAITING;
-      refound.amount = amountRefound
+      const refund = new Refund()
+      refund.state = StateRefundEnum.WAITING;
+      refund.amount = amountRefund
 
       var d = new Date()
       d.setMonth(d.getMonth() + i )
-      refound.dueDate = d
-      refound.offer = offer
+      refund.dueDate = d
+      refund.offer = offer
       
       // console.log('--------- ici')
-      // console.log(refound)
-      await refound.save()
+      // console.log(refund)
+      await refund.save()
 
     }
 
@@ -124,13 +124,13 @@ export default class {
   }
 
   /**
-   * GET details of an offer = all the refound deadlines 
+   * GET details of an offer = all the refund deadlines 
    */
-  async getDeadlinesRefound(req, res){
+  async getDeadlinesRefund(req, res){
 
     Offer.find({
       where: { id: req.params.id },
-      relations: [ "refounds" ]
+      relations: [ "refunds" ]
     })
       .then(offer => {
         res.json(offer)

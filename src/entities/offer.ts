@@ -2,7 +2,7 @@ import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, Ma
 
 import User from './user'
 import Project from './project'
-import Refound from './refound'
+import Refund from './refund'
 
 export enum State {
   WAITING = "waiting", 
@@ -35,6 +35,6 @@ export default class Offer extends BaseEntity {
   @Column({nullable: true})
   signature_investor_photo_key: string
 
-  @OneToMany(type => Refound, refound => refound.offer, {onDelete:'CASCADE'})
-  refounds: Refound[]
+  @OneToMany(type => Refund, refund => refund.offer, {onDelete:'CASCADE'})
+  refunds: Refund[]
 }

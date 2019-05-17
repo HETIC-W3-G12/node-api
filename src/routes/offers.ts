@@ -65,7 +65,7 @@ router.post('/refuse', privateRoute, new OffersController().refuseOffer)
  * @api {post} /offers/accept Accept offer
  * @apiVersion 1.0.0
  * @apiName AcceptOffer
- * @apiDescription The project's owen accept the offer. Turn project's state to running. Return the offer. Create the deadlines refound
+ * @apiDescription The project's owen accept the offer. Turn project's state to running. Return the offer. Create the deadlines refund
  * @apiGroup Offer
  *
  * @apiParam {String} offer_id   Mandatory - id of the offer.
@@ -83,9 +83,9 @@ router.post('/accept', privateRoute, new OffersController().acceptOffer)
 
 
 /**
- * @api {get} /offers/:id Get the deadlines refound off the offer
+ * @api {get} /offers/:id Get the deadlines refund off the offer
  * @apiVersion 1.0.0
- * @apiName deadlinesRefound
+ * @apiName deadlinesRefund
  * @apiDescription Retrieve all the deadlines and there status on a offer linked to a project.
  * @apiGroup Offer
  *
@@ -96,7 +96,7 @@ router.post('/accept', privateRoute, new OffersController().acceptOffer)
  *       "state": "accepted",
  *       "createdDate": "2019-04-26T07:21:02.527Z",
  *       "signature_investor_photo_key": null,
- *       "refounds": [
+ *       "refunds": [
  *           {
  *               "id": "637faef8-daf4-4415-ad6a-50509ed685c5",
  *               "amount": 66.8333333333333,
@@ -114,7 +114,7 @@ router.post('/accept', privateRoute, new OffersController().acceptOffer)
  *       ]
  *   }
  */
-router.get('/:id', privateRoute, new OffersController().getDeadlinesRefound)
+router.get('/:id', privateRoute, new OffersController().getDeadlinesRefund)
 
 
 // to debug - test

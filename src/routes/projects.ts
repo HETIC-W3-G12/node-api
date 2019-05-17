@@ -50,7 +50,19 @@ router.get('/', new ProjectsController().index)
  *        "timeLaps": 3,
  *        "createdDate": "2019-04-26T07:16:14.010Z",
  *        "signature_owner_photo_key": null
- *        "offers": null
+ *        "offers": [
+ *          {
+ *            "id": "6655e559-315d-4c1a-8d15-87034e0068c7",
+ *            "state": "waiting",
+ *            "createdDate": "2019-05-17T08:20:28.380Z",
+ *            "signature_investor_photo_key": null
+ *         },
+ *         {
+ *            "id": "acd5bf42-9942-4634-b331-b5d0b42318f2",
+ *            "state": "waiting",
+ *            "createdDate": "2019-05-17T08:26:36.989Z",
+ *            "signature_investor_photo_key": null
+ *        }]
  *     }
  *
  */
