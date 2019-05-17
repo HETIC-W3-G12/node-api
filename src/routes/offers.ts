@@ -13,6 +13,7 @@ import Offer from '../entities/offer';
  * @apiGroup Offer
  *
  * @apiParam {String} project_id   Mandatory - Project's id.
+ * @apiParam {String} signature    Signature image - base64 file
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK

@@ -1,7 +1,7 @@
 import Offer, { State as StateEnum } from '../entities/offer'
 import Project, {State as StateProjectEnum}  from '../entities/project'
 import Refound, {State as StateRefoundEnum}  from '../entities/refound'
-
+import { uploadFile } from '../file_upload'
 
 import { pick, forEach } from 'lodash'
 import { validate } from 'class-validator'
@@ -12,7 +12,7 @@ export default class {
    */ 
   async create(req, res) {
 
-    const params = pick(req.body, ['project_id'])
+    const params = pick(req.body, ['project_id', 'signature'])
 
     const offer = new Offer()
 
@@ -25,17 +25,27 @@ export default class {
     offer.project = project
     offer.state = StateEnum.WAITING
 
-    const errors = await validate(offer)
-
-    if (errors.length > 0) {
-        res.status(400).json(errors)
+    if (params.signature) {
+      const file = await uploadFile(params.signature, 'signature_investor')
+      offer.signature_investor_photo_key = file.Key
     } else {
-      offer.save().then(project => {
-          res.status(200).json(project)
-      }).catch(err => {
-          res.status(500).json(err)
+      res.status(400).json({
+        message: 'You have to sign the offer'
       })
     }
+    
+    const errors = await validate(offer)
+    if (errors.length > 0) {
+      res.status(400).json(errors)
+    } else {
+      offer.save().then(project => {
+        res.status(200).json(project)
+      }).catch(err => {
+        res.status(500).json(err)
+      })
+    }
+
+    
   }
 
   /*
@@ -113,7 +123,7 @@ export default class {
    * GET list of the offers -- to test and debug
    */ 
   async index(req, res) {
-    try{
+    try {
       const offers = await Offer.createQueryBuilder('offer')
                                 .leftJoinAndSelect('offer.user', 'user')
                                 .getMany()
@@ -126,7 +136,7 @@ export default class {
   /**
    * GET details of an offer = all the refound deadlines 
    */
-  async getDeadlinesRefound(req, res){
+  async getDeadlinesRefound(req, res) {
 
     Offer.find({
       where: { id: req.params.id },
@@ -140,5 +150,3 @@ export default class {
       })
   }
 }
-
-

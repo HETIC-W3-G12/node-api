@@ -50,7 +50,4 @@ export default class Project extends BaseEntity {
 
   @ManyToOne(type => Offer, offer => offer.project)
   offers: Offer[]
-
-  @Column({nullable: true})
-  signature_owner_photo_key: string
 }
