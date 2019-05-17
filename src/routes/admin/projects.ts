@@ -4,7 +4,7 @@ import * as express from 'express'
 const router = express.Router()
 
 /**
- * @api {get} /admin/projects Get all the project
+ * @api {get} /admin/projects Get all the project.
  * @apiGroup Admin Project
  * @apiVersion 1.0.0
  * 
@@ -47,9 +47,11 @@ router.get('/', async (req, res) => {
 })
 
 /**
- * @api {get} /admin/projects/valid/:id Validation of the project
+ * @api {get} /admin/projects/valid/:id Validate a project.
  * @apiGroup Admin Project
  * @apiVersion 1.0.0
+ * 
+ * @apiDescription The just created project's state are : unvalid. Need an admin validation to turn to valid to be display in the app.
  * 
  * @apiParam {integer} id Mandatory Id of the project
  * 
@@ -57,7 +59,7 @@ router.get('/', async (req, res) => {
  * 
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
- *     "Le projet a été supprimé."
+ *     "Le projet a été validé."
  */
 router.get('/valid/:id', async (req, res) => {
   
@@ -80,13 +82,17 @@ router.get('/valid/:id', async (req, res) => {
 })
 
 /**
- * @api {get} /admin/projects/delete/:id Delete the project
+ * @api {get} /admin/projects/delete/:id Delete a project
  * @apiGroup Admin Project
  * @apiVersion 1.0.0
  * 
  * @apiParam {integer} id Mandatory Id of the project
  * 
  * @apiPermission admin
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     "Le projet a été supprimé."
  */
 router.get('/delete/:id', async (req, res) => {
   

@@ -31,6 +31,6 @@ export default class Refund extends BaseEntity {
   @ManyToOne(type => Offer, offer => offer.refunds, {onDelete:'CASCADE'})
   offer: Offer
 
-  @CreateDateColumn()
+  @Column()
   dueDate: Date
 }

@@ -43,7 +43,10 @@ export default class {
   */ 
   async refuseOffer(req, res) {
     const params = pick(req.body, ['offer_id'])
-    const offer = await Offer.findOne(Offer, params['offer_id'])
+
+    const offer = await Offer.createQueryBuilder('offer')
+                              .where("id = :id", { id: params['offer_id'] })
+                              .getOne()
 
     // update project
     const project = await Project.findOne(offer.project)
@@ -70,7 +73,7 @@ export default class {
     const params = pick(req.body, ['offer_id'])
     
     const offer = await Offer.createQueryBuilder('offer')
-                              .where("id = :id", { id: req.params.id })
+                              .where("id = :id", { id: params['offer_id'] })
                               .getOne()
 
     offer.state = StateEnum.ACCEPTED
@@ -94,10 +97,7 @@ export default class {
       refund.dueDate = d
       refund.offer = offer
       
-      // console.log('--------- ici')
-      // console.log(refund)
       await refund.save()
-
     }
 
     const errors = await validate(offer)
@@ -109,20 +109,6 @@ export default class {
       }).catch(err => {
           res.status(500).json(err)
       })
-    }
-  }
-
-  /**
-   * GET list of the offers -- to test and debug
-   */ 
-  async index(req, res) {
-    try{
-      const offers = await Offer.createQueryBuilder('offer')
-                                .leftJoinAndSelect('offer.user', 'user')
-                                .getMany()
-      res.json(offers)
-    } catch(err) {
-      res.status(500).json(err)
     }
   }
 
