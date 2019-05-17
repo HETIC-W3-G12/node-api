@@ -26,15 +26,15 @@ export default class Offer extends BaseEntity {
   @CreateDateColumn()
   createdDate: Date
 
-  @ManyToOne(type => User, user => user.offers)
+  @ManyToOne(type => User, user => user.offers, {onDelete:'CASCADE'})
   user: User
 
-  @ManyToOne(type => Project, project => project.offers)
+  @ManyToOne(type => Project, project => project.offers, {onDelete:'CASCADE'})
   project: Project
 
   @Column({nullable: true})
   signature_investor_photo_key: string
 
-  @OneToMany(type => Refound, refound => refound.offer)
+  @OneToMany(type => Refound, refound => refound.offer, {onDelete:'CASCADE'})
   refounds: Refound[]
 }

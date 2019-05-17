@@ -28,7 +28,7 @@ export default class Refound extends BaseEntity {
   @CreateDateColumn()
   createdDate: Date
 
-  @ManyToOne(type => Offer, offer => offer.refounds)
+  @ManyToOne(type => Offer, offer => offer.refounds, {onDelete:'CASCADE'})
   offer: Offer
 
   @CreateDateColumn()

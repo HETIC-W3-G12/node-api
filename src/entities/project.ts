@@ -45,10 +45,10 @@ export default class Project extends BaseEntity {
   @CreateDateColumn()
   createdDate: Date
 
-  @ManyToOne(type => User, user => user.projects)
+  @ManyToOne(type => User, user => user.projects, {onDelete:'CASCADE'})
   user: User
 
-  @ManyToOne(type => Offer, offer => offer.project)
+  @ManyToOne(type => Offer, offer => offer.project, {onDelete:'CASCADE'})
   offers: Offer[]
 
   @Column({nullable: true})

@@ -12,7 +12,6 @@ const router = express.Router()
  */
 router.get('/', async (req, res) => {
   try{
-    console.log('---------- ici')
     const projects = await Project.createQueryBuilder('project')
                           // .leftJoinAndSelect('project.user', 'user')
                           .getMany()
@@ -62,11 +61,16 @@ router.get('/valid/:id', async (req, res) => {
  */
 router.get('/delete/:id', async (req, res) => {
   
-  await Project.createQueryBuilder()
-                .delete()
-                .from(Project)
-                .where("id = :id", { id: req.params.id })
-                .execute();
+  try{
+    await Project.createQueryBuilder()
+                  .delete()
+                  .from(Project)
+                  .where("id = :id", { id: req.params.id })
+                  .execute();
+    res.status(200).json("Le projet a été supprimé.")
+  } catch(err) {
+    res.status(500).json(err)
+  }
 })
 
 export default router
