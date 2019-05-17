@@ -70,45 +70,55 @@ export default class {
   * Accept offer
   */ 
   async acceptOffer(req, res) {
+
     const params = pick(req.body, ['offer_id'])
     
     const offer = await Offer.createQueryBuilder('offer')
-                              .where("id = :id", { id: params['offer_id'] })
+                              .where("offer.id = :id", { id: params['offer_id'] })
+                              .leftJoinAndSelect('offer.project', 'project')
                               .getOne()
 
     offer.state = StateEnum.ACCEPTED
-    
-    // update project
-    const project = await Project.findOne(offer.project)
-    project.state = StateProjectEnum.RUNNING;
-    project.save()
 
-    // create the reafound deadlines 
-    var amountInterest = ( ( project.price * project.interests ) / 12 ) * project.timeLaps
-    var amountRefund = ( project.price + amountInterest ) / project.timeLaps
+    try{
+      // update project
 
-    for(var i = 1; i <= project.timeLaps; i++){
-      const refund = new Refund()
-      refund.state = StateRefundEnum.WAITING;
-      refund.amount = amountRefund
+      const project = await Project.createQueryBuilder('project')
+                            .where("id = :id", { id: offer.project.id })
+                            .getOne()
 
-      var d = new Date()
-      d.setMonth(d.getMonth() + i )
-      refund.dueDate = d
-      refund.offer = offer
-      
-      await refund.save()
-    }
+      project.state = StateProjectEnum.RUNNING;
+      await project.save()
 
-    const errors = await validate(offer)
-    if (errors.length > 0) {
-        res.status(400).json(errors)
-    } else {
-      offer.save().then(offer => {
-          res.status(200).json(offer)
-      }).catch(err => {
-          res.status(500).json(err)
-      })
+      // create the reafound deadlines 
+      var amountInterest = ( ( project.price * project.interests ) / 12 ) * project.timeLaps
+      var amountRefund = ( project.price + amountInterest ) / project.timeLaps
+
+      for(var i = 1; i <= project.timeLaps; i++){
+        const refund = new Refund()
+        refund.state = StateRefundEnum.WAITING;
+        refund.amount = amountRefund
+
+        var d = new Date()
+        d.setMonth(d.getMonth() + i )
+        refund.dueDate = d
+        refund.offer = offer
+        
+        await refund.save()
+      }
+
+      const errors = await validate(offer)
+      if (errors.length > 0) {
+          res.status(400).json(errors)
+      } else {
+        offer.save().then(offer => {
+            res.status(200).json(offer)
+        }).catch(err => {
+            res.status(500).json(err)
+        })
+      }
+    } catch(err) {
+      res.status(500).json(err)
     }
   }
 
