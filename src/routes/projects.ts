@@ -33,7 +33,7 @@ router.get('/', new ProjectsController().index)
  * @api {get} /projects/:id Get Details
  * @apiVersion 1.0.0
  * @apiName Project
- * @apiDescription Get details on a project
+ * @apiDescription Get details on a project and the offer if some associated
  * @apiGroup Project
  *
  * @apiParam {integer} id Mandatory Id of the project
@@ -50,6 +50,7 @@ router.get('/', new ProjectsController().index)
  *        "timeLaps": 3,
  *        "createdDate": "2019-04-26T07:16:14.010Z",
  *        "signature_owner_photo_key": null
+ *        "offers": null
  *     }
  *
  */

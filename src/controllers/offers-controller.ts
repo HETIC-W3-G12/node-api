@@ -17,7 +17,7 @@ export default class {
     const offer = new Offer()
 
     offer.user = req.user
-    const project = await Project.findOne(Project, params['project_id'])
+    const project = await Project.findOne({ where: {id : params['project_id'] } })
 
     project.state = StateProjectEnum.WAITING;
     project.save()

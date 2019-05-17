@@ -38,11 +38,37 @@ const router = express.Router()
 router.get('/', async (req, res) => {
   try{
     const offers = await Offer.createQueryBuilder('offer')
+                              .leftJoinAndSelect('offer.user', 'user')
+                              .leftJoinAndSelect('offer.project', 'project')
                               .getMany()
     res.json(offers)
   } catch(err) {
     res.status(500).json(err)
   }
 })
+
+/**
+ * @api {get} /admin/offers/delete/:id Delete the offer
+ * @apiGroup Admin Offer
+ * @apiVersion 1.0.0
+ * 
+ * @apiParam {integer} id Mandatory Id of the offer
+ * 
+ * @apiPermission admin
+ */
+router.get('/delete/:id', async (req, res) => {
+  
+  try{
+    await Offer.createQueryBuilder()
+                  .delete()
+                  .from(Offer)
+                  .where("id = :id", { id: req.params.id })
+                  .execute();
+    res.status(200).json("L'offre a été supprimée.")
+  } catch(err) {
+    res.status(500).json(err)
+  }
+})
+
 
 export default router
