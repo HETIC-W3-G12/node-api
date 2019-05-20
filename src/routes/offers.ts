@@ -6,10 +6,10 @@ import OffersController from '../controllers/offers-controller'
 import Offer from '../entities/offer';
 
 /**
- * @api {post} /offers Create a offer
+ * @api {post} /offers Create an offer.
  * @apiVersion 1.0.0
  * @apiName CreateOffer
- * @apiDescription Create a new offer - investor will be linked by is token. By default, offer state is "waiting" for an action from the project's owner. If the owner accept, will be set to "accepted", if he refuse will be set to "refused". Turn the project's state to waiting (for acceptation by the project's owner). Return the offer, the investor and the project.
+ * @apiDescription Create a new offer - investor will be linked by is token. By default, offer's state is "waiting" for an action from the project's owner. If the owner accept, will be set to "accepted", if he refuse will be set to "refused". Turn the project's state to waiting (for acceptation by the project's owner). Return the offer, the investor and the project.
  * @apiGroup Offer
  *
  * @apiParam {String} project_id   Mandatory - Project's id.
@@ -42,7 +42,7 @@ import Offer from '../entities/offer';
 router.post('/', privateRoute, new OffersController().create)
 
 /**
- * @api {post} /offers/refuse Refuse offer
+ * @api {post} /offers/refuse Refuse an offer.
  * @apiVersion 1.0.0
  * @apiName RefuseOffer
  * @apiDescription Project's owner can refuse the offer. Turn back the projet's state to valid to receive an another offer. Return the offer.
@@ -62,10 +62,10 @@ router.post('/', privateRoute, new OffersController().create)
 router.post('/refuse', privateRoute, new OffersController().refuseOffer)
 
 /**
- * @api {post} /offers/accept Accept offer
+ * @api {post} /offers/accept Accept an offer.
  * @apiVersion 1.0.0
  * @apiName AcceptOffer
- * @apiDescription The project's owen accept the offer. Turn project's state to running. Return the offer. Create the deadlines refound
+ * @apiDescription The project's owen accept the offer. Turn project's state to running and create the refunds's deadlines associated. Return the offer. 
  * @apiGroup Offer
  *
  * @apiParam {String} offer_id   Mandatory - id of the offer.
@@ -83,9 +83,9 @@ router.post('/accept', privateRoute, new OffersController().acceptOffer)
 
 
 /**
- * @api {get} /offers/:id Get the deadlines refound off the offer
+ * @api {get} /offers/:id Get refunds's deadlines.
  * @apiVersion 1.0.0
- * @apiName deadlinesRefound
+ * @apiName deadlinesRefund
  * @apiDescription Retrieve all the deadlines and there status on a offer linked to a project.
  * @apiGroup Offer
  *
@@ -96,7 +96,7 @@ router.post('/accept', privateRoute, new OffersController().acceptOffer)
  *       "state": "accepted",
  *       "createdDate": "2019-04-26T07:21:02.527Z",
  *       "signature_investor_photo_key": null,
- *       "refounds": [
+ *       "refunds": [
  *           {
  *               "id": "637faef8-daf4-4415-ad6a-50509ed685c5",
  *               "amount": 66.8333333333333,
@@ -114,10 +114,7 @@ router.post('/accept', privateRoute, new OffersController().acceptOffer)
  *       ]
  *   }
  */
-router.get('/:id', privateRoute, new OffersController().getDeadlinesRefound)
+router.get('/:id', privateRoute, new OffersController().getDeadlinesRefund)
 
-
-// to debug - test
-// router.get('/', new OffersController().index)
 
 export default router

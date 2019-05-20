@@ -5,7 +5,7 @@ import { privateRoute } from '../passport'
 import UsersController from '../controllers/users-controller'
 
 /**
- * @api {post} /users/sign_up Create user
+ * @api {post} /users/sign_up Create a user
  * @apiGroup Users
  * @apiVersion 1.0.0
  * @apiParam {String} email Mandatory user unique email

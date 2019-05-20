@@ -46,7 +46,7 @@ Convention de nommage :
 - `start`: Lance les migrations puis le serveur avec la config de production.
 - `dev`: Lance le serveur avec [`nodemon`](https://github.com/remy/nodemon) (Relance automatiquement l’app quand le code a changé)
 - `c` : Lance le projet en mode [`REPL`](https://nodejs.org/api/repl.html) avec les models exportés dans `models/index.js` dans le scope global.
-
+- `psql "euko-api"` : requête SQL en CLI
 
 ## Documentation de l'API
 
