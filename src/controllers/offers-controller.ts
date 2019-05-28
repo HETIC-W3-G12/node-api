@@ -103,7 +103,7 @@ export default class {
       const amountInterest = ( ( project.price * project.interests ) / 12 ) * project.timeLaps
       const amountRefund = ( project.price + amountInterest ) / project.timeLaps
 
-      for(const i = 1; i <= project.timeLaps; i++){
+      for (let i = 1; i <= project.timeLaps; i++){
         const refund = new Refund()
         refund.state = StateRefundEnum.WAITING;
         refund.amount = amountRefund
