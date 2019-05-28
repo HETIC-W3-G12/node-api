@@ -77,7 +77,7 @@ export default class {
   * Accept offer
   */ 
   async acceptOffer(req, res) {
-    const params = pick(req.body, ['offer_id'])
+    const params = pick(req.body, ['offer_id', 'signature'])
     
     const offer = await Offer.findOne(Offer, params['offer_id'])
     offer.state = StateEnum.ACCEPTED
@@ -108,7 +108,7 @@ export default class {
     }
 
     if (params.signature) {
-      const file = await uploadFile(params.signature, 'signature_investor')
+      const file = await uploadFile(params.signature, 'signature_owner')
       offer.signature_owner_photo_key = file.Key
     } else {
       res.status(400).json({
