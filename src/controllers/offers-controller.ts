@@ -100,15 +100,15 @@ export default class {
       await project.save()
 
       // create the reafound deadlines 
-      var amountInterest = ( ( project.price * project.interests ) / 12 ) * project.timeLaps
-      var amountRefund = ( project.price + amountInterest ) / project.timeLaps
+      const amountInterest = ( ( project.price * project.interests ) / 12 ) * project.timeLaps
+      const amountRefund = ( project.price + amountInterest ) / project.timeLaps
 
-      for(var i = 1; i <= project.timeLaps; i++){
+      for(const i = 1; i <= project.timeLaps; i++){
         const refund = new Refund()
         refund.state = StateRefundEnum.WAITING;
         refund.amount = amountRefund
 
-        var d = new Date()
+        const d = new Date()
         d.setMonth(d.getMonth() + i )
         refund.dueDate = d
         refund.offer = offer
