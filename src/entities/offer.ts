@@ -2,7 +2,7 @@ import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, Ma
 
 import User from './user'
 import Project from './project'
-import Refound from './refound'
+import Refund from './refund'
 
 export enum State {
   WAITING = "waiting", 
@@ -26,10 +26,10 @@ export default class Offer extends BaseEntity {
   @CreateDateColumn()
   createdDate: Date
 
-  @ManyToOne(type => User, user => user.offers)
+  @ManyToOne(type => User, user => user.offers, {onDelete:'CASCADE'})
   user: User
 
-  @ManyToOne(type => Project, project => project.offers)
+  @ManyToOne(type => Project, project => project.offers, {onDelete:'CASCADE'})
   project: Project
 
   @Column({nullable: true})
@@ -38,6 +38,6 @@ export default class Offer extends BaseEntity {
   @Column({nullable: true})
   signature_owner_photo_key: string
 
-  @OneToMany(type => Refound, refound => refound.offer)
-  refounds: Refound[]
+  @OneToMany(type => Refund, refund => refund.offer, {onDelete:'CASCADE'})
+  refunds: Refund[]
 }

@@ -9,7 +9,7 @@ export enum State {
 }
 
 @Entity()
-export default class Refound extends BaseEntity {
+export default class Refund extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
@@ -28,9 +28,9 @@ export default class Refound extends BaseEntity {
   @CreateDateColumn()
   createdDate: Date
 
-  @ManyToOne(type => Offer, offer => offer.refounds)
+  @ManyToOne(type => Offer, offer => offer.refunds, {onDelete:'CASCADE'})
   offer: Offer
 
-  @CreateDateColumn()
+  @Column()
   dueDate: Date
 }

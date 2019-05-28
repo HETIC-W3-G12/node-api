@@ -5,10 +5,9 @@ import { privateRoute } from '../passport'
 import ProjectsController from '../controllers/projects-controller'
 
 /**
- * @api {get} /projects  Get Valid only
+ * @api {get} /projects  Get valid's projects.
  * @apiVersion 1.0.0
  * @apiName Projects
- * @apiDescription Get all the valid projects
  * @apiGroup Project
  *
  * @apiSuccessExample {json} Success-Response:
@@ -30,10 +29,10 @@ router.get('/', new ProjectsController().index)
 
 
 /**
- * @api {get} /projects/:id Get Details
+ * @api {get} /projects/:id Get project's details.
  * @apiVersion 1.0.0
  * @apiName Project
- * @apiDescription Get details on a project
+ * @apiDescription Get details on a project and the offer if some associated
  * @apiGroup Project
  *
  * @apiParam {integer} id Mandatory Id of the project
@@ -50,6 +49,19 @@ router.get('/', new ProjectsController().index)
  *        "timeLaps": 3,
  *        "createdDate": "2019-04-26T07:16:14.010Z",
  *        "signature_owner_photo_key": null
+ *        "offers": [
+ *          {
+ *            "id": "6655e559-315d-4c1a-8d15-87034e0068c7",
+ *            "state": "waiting",
+ *            "createdDate": "2019-05-17T08:20:28.380Z",
+ *            "signature_investor_photo_key": null
+ *         },
+ *         {
+ *            "id": "acd5bf42-9942-4634-b331-b5d0b42318f2",
+ *            "state": "waiting",
+ *            "createdDate": "2019-05-17T08:26:36.989Z",
+ *            "signature_investor_photo_key": null
+ *        }]
  *     }
  *
  */
@@ -58,7 +70,7 @@ router.get('/:id', new ProjectsController().getOneProject)
 
 
 /**
- * @api {post} /projects Create project
+ * @api {post} /projects Create a project.
  * @apiVersion 1.0.0
  * @apiName CreateProject
  * @apiDescription Create a new project. By default, project state is set to "valid". Will be change to "unvalid" and requiere manuel admin validation. When a investor make an offer, the project state turn to "waiting" -- mean an action from ower. He can accept the offer, turn the project to "running" (refounding) or refuse, project will turn back to valid for now. When the last refound is made, the project state will be set to "complete". For now, no need to send interests rate, will be set to 0.01 by default.

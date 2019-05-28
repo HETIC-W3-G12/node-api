@@ -20,18 +20,16 @@ export default class {
   /**
    * GET details of one project
    */
-  getOneProject(req, res) {
-    Project.findOne({
-      where: { id: req.params.id }
-      // ,
-      // relations: ["user"]
-    })
-      .then(project => {
-        res.json(project)
-      })
-      .catch(err => {
-        res.status(404).json(err)
-      })
+  async getOneProject(req, res) {
+    try{
+      const project = await Project.createQueryBuilder('project')
+                            .where("project.id = :id", { id: req.params.id })
+                            .leftJoinAndSelect('project.offers', 'offer')
+                            .getOne()
+      res.json(project)
+    } catch(err) {
+      res.status(500).json(err)
+    }
   }
 
   /**

@@ -1,10 +1,10 @@
-import Offer, { State as StateEnum } from '../entities/offer'
-import Project, {State as StateProjectEnum}  from '../entities/project'
-import Refound, {State as StateRefoundEnum}  from '../entities/refound'
-import { uploadFile } from '../file_upload'
-
 import { pick, forEach } from 'lodash'
 import { validate } from 'class-validator'
+
+import Offer, { State as StateEnum } from '../entities/offer'
+import Project, {State as StateProjectEnum}  from '../entities/project'
+import Refund, {State as StateRefundEnum}  from '../entities/refund'
+import { uploadFile } from '../file_upload'
 
 export default class {
   /**
@@ -17,7 +17,7 @@ export default class {
     const offer = new Offer()
 
     offer.user = req.user
-    const project = await Project.findOne(Project, params['project_id'])
+    const project = await Project.findOne({ where: {id : params['project_id'] } })
 
     project.state = StateProjectEnum.WAITING;
     project.save()
@@ -53,7 +53,10 @@ export default class {
   */ 
   async refuseOffer(req, res) {
     const params = pick(req.body, ['offer_id'])
-    const offer = await Offer.findOne(Offer, params['offer_id'])
+
+    const offer = await Offer.createQueryBuilder('offer')
+                              .where("id = :id", { id: params['offer_id'] })
+                              .getOne()
 
     // update project
     const project = await Project.findOne(offer.project)
@@ -79,77 +82,72 @@ export default class {
   async acceptOffer(req, res) {
     const params = pick(req.body, ['offer_id', 'signature'])
     
-    const offer = await Offer.findOne(Offer, params['offer_id'])
+    const offer = await Offer.createQueryBuilder('offer')
+                              .where("offer.id = :id", { id: params['offer_id'] })
+                              .leftJoinAndSelect('offer.project', 'project')
+                              .getOne()
+
     offer.state = StateEnum.ACCEPTED
-    
-    // update project
-    const project = await Project.findOne(offer.project)
-    project.state = StateProjectEnum.RUNNING;
-    project.save()
 
-    // create the reafound deadlines 
-    var amountInterest = ( ( project.price * project.interests ) / 12 ) * project.timeLaps
-    var amountRefound = ( project.price + amountInterest ) / project.timeLaps
-
-    for(var i = 1; i <= project.timeLaps; i++){
-      const refound = new Refound()
-      refound.state = StateRefoundEnum.WAITING;
-      refound.amount = amountRefound
-
-      var d = new Date()
-      d.setMonth(d.getMonth() + i )
-      refound.dueDate = d
-      refound.offer = offer
-      
-      // console.log('--------- ici')
-      // console.log(refound)
-      await refound.save()
-
-    }
-
-    if (params.signature) {
-      const file = await uploadFile(params.signature, 'signature_owner')
-      offer.signature_owner_photo_key = file.Key
-    } else {
-      res.status(400).json({
-        message: 'You have to sign the offer'
-      })
-    }
-
-    const errors = await validate(offer)
-    if (errors.length > 0) {
-        res.status(400).json(errors)
-    } else {
-      offer.save().then(offer => {
-          res.status(200).json(offer)
-      }).catch(err => {
-          res.status(500).json(err)
-      })
-    }
-  }
-
-  /**
-   * GET list of the offers -- to test and debug
-   */ 
-  async index(req, res) {
     try {
-      const offers = await Offer.createQueryBuilder('offer')
-                                .leftJoinAndSelect('offer.user', 'user')
-                                .getMany()
-      res.json(offers)
+      // update project
+
+      const project = await Project.createQueryBuilder('project')
+                            .where("id = :id", { id: offer.project.id })
+                            .getOne()
+
+      project.state = StateProjectEnum.RUNNING;
+      await project.save()
+
+      // create the reafound deadlines 
+      var amountInterest = ( ( project.price * project.interests ) / 12 ) * project.timeLaps
+      var amountRefund = ( project.price + amountInterest ) / project.timeLaps
+
+      for(var i = 1; i <= project.timeLaps; i++){
+        const refund = new Refund()
+        refund.state = StateRefundEnum.WAITING;
+        refund.amount = amountRefund
+
+        var d = new Date()
+        d.setMonth(d.getMonth() + i )
+        refund.dueDate = d
+        refund.offer = offer
+        
+        await refund.save()
+      }
+
+      if (params.signature) {
+        const file = await uploadFile(params.signature, 'signature_owner')
+        offer.signature_owner_photo_key = file.Key
+      } else {
+        res.status(400).json({
+          message: 'You have to sign the offer'
+        })
+      }
+
+      const errors = await validate(offer)
+      if (errors.length > 0) {
+          res.status(400).json(errors)
+      } else {
+        offer.save().then(offer => {
+            res.status(200).json(offer)
+        }).catch(err => {
+            res.status(500).json(err)
+        })
+      }
     } catch(err) {
       res.status(500).json(err)
     }
   }
 
   /**
-   * GET details of an offer = all the refound deadlines 
+   * GET details of an offer = all the refund deadlines 
    */
-  async getDeadlinesRefound(req, res) {
+  async getDeadlinesRefund(req, res){
 
     Offer.find({
       where: { id: req.params.id },
-      relations: [ "refounds" ]
+      relations: [ "refunds" ]
     })
       .then(offer => {
         res.json(offer)

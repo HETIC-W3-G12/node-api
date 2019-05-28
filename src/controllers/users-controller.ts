@@ -85,16 +85,41 @@ export default class {
     try{
       const project = await Project.createQueryBuilder('project')
                               .where("project.user = :id", { id: req.user.id })
+                              .leftJoinAndSelect('project.offers', 'offer')
                               .getOne()
       
       const offers = await Offer.createQueryBuilder('offer')
                                 .where("offer.user = :id", { id: req.user.id })
                                 .leftJoinAndSelect('offer.project', 'project')
+                                .leftJoinAndSelect('offer.refunds', 'refund')
                                 .getMany()
       
+      var offArr = []
+
+      offers.forEach(function(element){
+
+        var amountPayed = 0
+        const rfd = element.refunds
+
+        rfd.forEach(function(item){
+          if(item.state == "payed"){
+            amountPayed = amountPayed + item.amount
+          }
+        })
+
+        var val = {
+          "id" : element.id,
+          "state" : element.state,
+          "amountPayed" : amountPayed,
+          "project" : element.project
+        } 
+
+        offArr.push(val)
+      })     
+
       const response = {
         "project": project,
-        "offers": offers
+        "offers": offArr
       }
       
       res.json(response)

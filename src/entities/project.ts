@@ -1,4 +1,4 @@
-import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne} from 'typeorm'
+import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, OneToMany} from 'typeorm'
 
 import User from './user'
 import Offer from './offer'
@@ -45,9 +45,9 @@ export default class Project extends BaseEntity {
   @CreateDateColumn()
   createdDate: Date
 
-  @ManyToOne(type => User, user => user.projects)
+  @ManyToOne(type => User, user => user.projects, {onDelete:'CASCADE'})
   user: User
 
-  @ManyToOne(type => Offer, offer => offer.project)
+  @OneToMany(type => Offer, offer => offer.project, {onDelete:'CASCADE'})
   offers: Offer[]
 }
