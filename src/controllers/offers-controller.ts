@@ -107,6 +107,15 @@ export default class {
 
     }
 
+    if (params.signature) {
+      const file = await uploadFile(params.signature, 'signature_investor')
+      offer.signature_owner_photo_key = file.Key
+    } else {
+      res.status(400).json({
+        message: 'You have to sign the offer'
+      })
+    }
+
     const errors = await validate(offer)
     if (errors.length > 0) {
         res.status(400).json(errors)

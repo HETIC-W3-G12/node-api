@@ -70,6 +70,7 @@ router.post('/refuse', privateRoute, new OffersController().refuseOffer)
  * @apiGroup Offer
  *
  * @apiParam {String} offer_id   Mandatory - id of the offer.
+ * @apiParam {String} signature    Signature image - base64 file
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
