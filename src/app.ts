@@ -18,7 +18,7 @@ const app = express()
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(bodyParser.json()) // for parsing application/json
+app.use(bodyParser.json({limit: '50mb'})) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 // createConnection method will automatically read connection options
