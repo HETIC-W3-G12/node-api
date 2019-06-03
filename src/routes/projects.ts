@@ -32,7 +32,7 @@ router.get('/', new ProjectsController().index)
  * @api {get} /projects/:id Get project's details.
  * @apiVersion 1.0.0
  * @apiName Project
- * @apiDescription Get details on a project and the offer if some associated
+ * @apiDescription Get details on a project, the project's owner and the offer if some associated
  * @apiGroup Project
  *
  * @apiParam {integer} id Mandatory Id of the project
@@ -61,7 +61,22 @@ router.get('/', new ProjectsController().index)
  *            "state": "waiting",
  *            "createdDate": "2019-05-17T08:26:36.989Z",
  *            "signature_investor_photo_key": null
- *        }]
+ *        }],
+ *        "user": {
+ *           "id": "068f84b1-a282-4ac4-8af6-8312e401f46e",
+ *           "email": "saaaaaa@gmail.com",
+ *           "firstname": "saaaaam",
+ *           "lastname": "chery",
+ *           "birthdate": "1992-06-12T00:00:00.000Z",
+ *           "birthplace": "blois",
+ *           "adress": "9 pierre dupond",
+ *           "city": "paris",
+ *           "postCode": 75010,
+ *           "identity_key": null,
+ *           "face_photo_key": null,
+ *           "admin": false,
+ *           "createdDate": "2019-04-26T07:12:59.365Z"
+ *        }
  *     }
  *
  */

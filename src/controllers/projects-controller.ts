@@ -25,6 +25,7 @@ export default class {
       const project = await Project.createQueryBuilder('project')
                             .where("project.id = :id", { id: req.params.id })
                             .leftJoinAndSelect('project.offers', 'offer')
+                            .leftJoinAndSelect('project.user', 'user')
                             .getOne()
       res.json(project)
     } catch(err) {
