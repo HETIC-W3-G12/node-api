@@ -85,7 +85,7 @@ router.post('/accept', privateRoute, new OffersController().acceptOffer)
 
 
 /**
- * @api {get} /offers/:id Get refunds's deadlines.
+ * @api {get} /offers/:id Get offer's details and refunds's deadlines.
  * @apiVersion 1.0.0
  * @apiName deadlinesRefund
  * @apiDescription Retrieve all the deadlines and there status on a offer linked to a project.
@@ -113,7 +113,32 @@ router.post('/accept', privateRoute, new OffersController().acceptOffer)
  *               "createdDate": "2019-05-16T14:39:11.584Z",
  *               "dueDate": "2019-07-16T14:39:11.584Z"
  *           }
- *       ]
+ *       ],
+ *       "project": {
+ *           "id": "301adfa9-ef20-46f4-8542-298860309fb3",
+ *           "title": "un vélo",
+ *           "description": "svp c'est urgent",
+ *           "price": 200,
+ *           "interests": 0.1,
+ *           "state": "waiting",
+ *           "timeLaps": 3,
+ *           "createdDate": "2019-06-03T07:30:44.959Z",
+ *           "user": {
+ *               "id": "068f84b1-a282-4ac4-8af6-8312e401f46e",
+ *               "email": "saaaaaa@gmail.com",
+ *               "firstname": "saaaaam",
+ *               "lastname": "chery",
+ *               "birthdate": "1992-06-12T00:00:00.000Z",
+ *               "birthplace": "blois",
+ *               "adress": "9 pierre dupond",
+ *               "city": "paris",
+ *               "postCode": 75010,
+ *               "identity_key": null,
+ *               "face_photo_key": null,
+ *               "admin": false,
+ *               "createdDate": "2019-04-26T07:12:59.365Z"
+ *           }
+ *        }
  *   }
  */
 router.get('/:id', privateRoute, new OffersController().getDeadlinesRefund)
