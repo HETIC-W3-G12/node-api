@@ -123,7 +123,8 @@ router.post('/accept', privateRoute, new OffersController().acceptOffer)
  *           "state": "waiting",
  *           "timeLaps": 3,
  *           "createdDate": "2019-06-03T07:30:44.959Z",
- *           "user": {
+ *        }
+ *        "user": {
  *               "id": "068f84b1-a282-4ac4-8af6-8312e401f46e",
  *               "email": "saaaaaa@gmail.com",
  *               "firstname": "saaaaam",
@@ -137,7 +138,6 @@ router.post('/accept', privateRoute, new OffersController().acceptOffer)
  *               "face_photo_key": null,
  *               "admin": false,
  *               "createdDate": "2019-04-26T07:12:59.365Z"
- *           }
  *        }
  *   }
  */
