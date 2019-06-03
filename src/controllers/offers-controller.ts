@@ -33,7 +33,7 @@ export default class {
         message: 'You have to sign the offer'
       })
     }
-    
+
     const errors = await validate(offer)
     if (errors.length > 0) {
       res.status(400).json(errors)
@@ -145,15 +145,17 @@ export default class {
    */
   async getDeadlinesRefund(req, res){
 
-    Offer.find({
-      where: { id: req.params.id },
-      relations: [ "refunds" ]
-    })
-      .then(offer => {
-        res.json(offer)
-      })
-      .catch(err => {
-        res.status(404).json(err)
-      })
+    try{
+      const offer = await Offer.createQueryBuilder('offer')
+                                .where("offer.id = :id", { id: req.params.id })
+                                .leftJoinAndSelect('offer.refunds', 'refund')
+                                .leftJoinAndSelect('offer.project', 'project')
+                                .leftJoinAndSelect('project.user', 'user')
+                                .getOne()
+
+      res.json(offer)
+    } catch(err) {
+      res.status(500).json(err)
+    }
   }
 }
