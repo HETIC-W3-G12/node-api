@@ -144,8 +144,7 @@ export default class {
    * GET details of an offer = all the refund deadlines 
    */
   async getDeadlinesRefund(req, res){
-
-    try{
+    try {
       const offer = await Offer.createQueryBuilder('offer')
                                 .where("offer.id = :id", { id: req.params.id })
                                 .leftJoinAndSelect('offer.refunds', 'refund')
@@ -153,11 +152,21 @@ export default class {
                                 .leftJoinAndSelect('offer.user', 'user')
                                 .getOne()
 
-      res.json({
+      const payload = {
         ...offer,
-        signature_investor: await getFile(offer.signature_investor_photo_key),
-        signature_owner: await getFile(offer.signature_owner_photo_key)
-      })
+        signature_investor: null,
+        signature_owner: null
+      }
+
+      if (offer.signature_investor_photo_key) {
+        payload.signature_investor = await getFile(offer.signature_investor_photo_key)
+      }
+
+      if (offer.signature_owner_photo_key) {
+        payload.signature_owner = await getFile(offer.signature_owner_photo_key)
+      }
+
+      res.json(payload)
     } catch(err) {
       res.status(500).json(err)
     }
