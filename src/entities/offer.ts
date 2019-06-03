@@ -35,6 +35,9 @@ export default class Offer extends BaseEntity {
   @Column({nullable: true})
   signature_investor_photo_key: string
 
+  @Column({nullable: true})
+  signature_owner_photo_key: string
+
   @OneToMany(type => Refund, refund => refund.offer, {onDelete:'CASCADE'})
   refunds: Refund[]
 }

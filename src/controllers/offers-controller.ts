@@ -1,10 +1,10 @@
+import { pick, forEach } from 'lodash'
+import { validate } from 'class-validator'
+
 import Offer, { State as StateEnum } from '../entities/offer'
 import Project, {State as StateProjectEnum}  from '../entities/project'
 import Refund, {State as StateRefundEnum}  from '../entities/refund'
-
-
-import { pick, forEach } from 'lodash'
-import { validate } from 'class-validator'
+import { uploadFile } from '../file_upload'
 
 export default class {
   /**
@@ -12,7 +12,7 @@ export default class {
    */ 
   async create(req, res) {
 
-    const params = pick(req.body, ['project_id'])
+    const params = pick(req.body, ['project_id', 'signature'])
 
     const offer = new Offer()
 
@@ -25,17 +25,27 @@ export default class {
     offer.project = project
     offer.state = StateEnum.WAITING
 
-    const errors = await validate(offer)
-
-    if (errors.length > 0) {
-        res.status(400).json(errors)
+    if (params.signature) {
+      const file = await uploadFile(params.signature, 'signature_investor')
+      offer.signature_investor_photo_key = file.Key
     } else {
-      offer.save().then(project => {
-          res.status(200).json(project)
-      }).catch(err => {
-          res.status(500).json(err)
+      res.status(400).json({
+        message: 'You have to sign the offer'
       })
     }
+    
+    const errors = await validate(offer)
+    if (errors.length > 0) {
+      res.status(400).json(errors)
+    } else {
+      offer.save().then(project => {
+        res.status(200).json(project)
+      }).catch(err => {
+        res.status(500).json(err)
+      })
+    }
+
+    
   }
 
   /*
@@ -70,8 +80,7 @@ export default class {
   * Accept offer
   */ 
   async acceptOffer(req, res) {
-
-    const params = pick(req.body, ['offer_id'])
+    const params = pick(req.body, ['offer_id', 'signature'])
     
     const offer = await Offer.createQueryBuilder('offer')
                               .where("offer.id = :id", { id: params['offer_id'] })
@@ -80,7 +89,7 @@ export default class {
 
     offer.state = StateEnum.ACCEPTED
 
-    try{
+    try {
       // update project
 
       const project = await Project.createQueryBuilder('project')
@@ -91,20 +100,29 @@ export default class {
       await project.save()
 
       // create the reafound deadlines 
-      var amountInterest = ( ( project.price * project.interests ) / 12 ) * project.timeLaps
-      var amountRefund = ( project.price + amountInterest ) / project.timeLaps
+      const amountInterest = ( ( project.price * project.interests ) / 12 ) * project.timeLaps
+      const amountRefund = ( project.price + amountInterest ) / project.timeLaps
 
-      for(var i = 1; i <= project.timeLaps; i++){
+      for (let i = 1; i <= project.timeLaps; i++){
         const refund = new Refund()
         refund.state = StateRefundEnum.WAITING;
         refund.amount = amountRefund
 
-        var d = new Date()
+        const d = new Date()
         d.setMonth(d.getMonth() + i )
         refund.dueDate = d
         refund.offer = offer
         
         await refund.save()
+      }
+
+      if (params.signature) {
+        const file = await uploadFile(params.signature, 'signature_owner')
+        offer.signature_owner_photo_key = file.Key
+      } else {
+        res.status(400).json({
+          message: 'You have to sign the offer'
+        })
       }
 
       const errors = await validate(offer)
@@ -139,5 +157,3 @@ export default class {
       })
   }
 }
-
-

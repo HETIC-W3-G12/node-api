@@ -50,7 +50,4 @@ export default class Project extends BaseEntity {
 
   @OneToMany(type => Offer, offer => offer.project, {onDelete:'CASCADE'})
   offers: Offer[]
-
-  @Column({nullable: true})
-  signature_owner_photo_key: string
 }
