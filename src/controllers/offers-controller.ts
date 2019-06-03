@@ -150,7 +150,7 @@ export default class {
                                 .where("offer.id = :id", { id: req.params.id })
                                 .leftJoinAndSelect('offer.refunds', 'refund')
                                 .leftJoinAndSelect('offer.project', 'project')
-                                .leftJoinAndSelect('project.user', 'user')
+                                .leftJoinAndSelect('offer.user', 'user')
                                 .getOne()
 
       res.json(offer)
