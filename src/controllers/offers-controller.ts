@@ -4,7 +4,7 @@ import { validate } from 'class-validator'
 import Offer, { State as StateEnum } from '../entities/offer'
 import Project, {State as StateProjectEnum}  from '../entities/project'
 import Refund, {State as StateRefundEnum}  from '../entities/refund'
-import { uploadFile } from '../file_upload'
+import { uploadFile, getFile } from '../file_upload'
 
 export default class {
   /**
@@ -153,7 +153,11 @@ export default class {
                                 .leftJoinAndSelect('offer.user', 'user')
                                 .getOne()
 
-      res.json(offer)
+      res.json({
+        ...offer,
+        signature_investor: await getFile(offer.signature_investor_photo_key),
+        signature_owner: await getFile(offer.signature_owner_photo_key)
+      })
     } catch(err) {
       res.status(500).json(err)
     }
