@@ -1,0 +1,39 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "ts-node ./node_modules/typeorm/cli.js migration:run && ts-node -T ./bin/www",
+    "dev": "nodemon --watch",
+    "c": "ts-node ./repl.ts",
+    "doc": "apidoc -i src/routes/ -o apidoc/",
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js"
+  },
+  "dependencies": {
+    "@types/node": "^10.12.18",
+    "apidoc": "^0.17.7",
+    "aws-sdk": "^2.432.0",
+    "bcrypt": "^3.0.6",
+    "class-validator": "^0.9.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "dotenv": "^6.2.0",
+    "express": "~4.16.0",
+    "jsonwebtoken": "^8.4.0",
+    "lodash": "^4.17.11",
+    "morgan": "~1.9.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "pg": "^7.7.1",
+    "pg-hstore": "^2.3.2",
+    "reflect-metadata": "^0.1.12",
+    "ts-node": "^7.0.1",
+    "typeorm": "^0.2.11",
+    "typescript": "^3.2.2",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.11.1",
+    "nodemon": "^1.18.9",
+    "typescript-eslint-parser": "^21.0.2"
+  }
+}
