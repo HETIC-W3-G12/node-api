@@ -50,6 +50,6 @@ Convention de nommage :
 
 ## Documentation de l'API
 
-https://euko-api-staging.herokuapp.com
+https://euko-api.herokuapp.com/
 
 - mettre à jour l'API (fichier HTML) `apidoc -i routes/ -o apidoc/`
