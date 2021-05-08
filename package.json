@@ -27,7 +27,7 @@
     "pg-hstore": "^2.3.2",
     "reflect-metadata": "^0.1.12",
     "ts-node": "^7.0.1",
-    "typeorm": "^0.2.11",
+    "typeorm": "^0.2.25",
     "typescript": "^3.2.2",
     "uuid": "^3.3.2"
   },
