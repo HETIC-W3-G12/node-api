@@ -10,7 +10,7 @@
   "dependencies": {
     "@types/node": "^10.12.18",
     "apidoc": "^0.17.7",
-    "aws-sdk": "^2.432.0",
+    "aws-sdk": "^2.814.0",
     "bcrypt": "^3.0.6",
     "class-validator": "^0.9.1",
     "cookie-parser": "~1.4.3",
