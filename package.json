@@ -12,7 +12,7 @@
     "apidoc": "^0.17.7",
     "aws-sdk": "^2.432.0",
     "bcrypt": "^3.0.6",
-    "class-validator": "^0.9.1",
+    "class-validator": "^0.14.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "dotenv": "^6.2.0",
